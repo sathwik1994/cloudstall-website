@@ -2,7 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Zap, Shield, Cpu } from 'lucide-react';
 
-const Hero: React.FC = () => {
+interface HeroProps {
+  onGetStartedClick?: () => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ onGetStartedClick }) => {
   const floatingIcons = [
     { Icon: Zap, delay: 0, x: 100, y: -50 },
     { Icon: Shield, delay: 0.2, x: -80, y: -30 },
@@ -98,9 +102,7 @@ const Hero: React.FC = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="btn-primary group inline-flex items-center text-lg"
-              onClick={() => {
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-              }}
+              onClick={onGetStartedClick}
             >
               Start Your Project
               <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />

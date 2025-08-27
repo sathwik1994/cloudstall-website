@@ -15,7 +15,11 @@ import {
   Cpu
 } from 'lucide-react';
 
-const Services: React.FC = () => {
+interface ServicesProps {
+  onServiceClick?: (serviceName: string) => void;
+}
+
+const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
   const services = [
     {
       icon: Brain,
@@ -162,7 +166,9 @@ const Services: React.FC = () => {
                 scale: 1.02,
                 translateY: -5
               }}
-              className="group relative overflow-hidden bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500"
+              whileTap={{ scale: 0.98 }}
+              onClick={() => onServiceClick?.(service.title)}
+              className="group relative overflow-hidden bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer"
             >
               {/* Gradient Background on Hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
@@ -199,16 +205,14 @@ const Services: React.FC = () => {
                   ))}
                 </div>
 
-                {/* Hover Arrow */}
+                {/* Get Quote Button */}
                 <motion.div
-                  initial={{ opacity: 0, x: -10 }}
-                  whileHover={{ opacity: 1, x: 0 }}
-                  className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-300"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileHover={{ opacity: 1, y: 0 }}
+                  className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300"
                 >
-                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
+                  <div className="bg-primary text-white px-4 py-2 rounded-lg text-center text-sm font-semibold">
+                    Get Project Quote →
                   </div>
                 </motion.div>
               </div>
@@ -231,9 +235,7 @@ const Services: React.FC = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="btn-primary inline-flex items-center text-lg"
-            onClick={() => {
-              document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-            }}
+            onClick={() => onServiceClick?.('General Inquiry')}
           >
             Get Custom Quote
             <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

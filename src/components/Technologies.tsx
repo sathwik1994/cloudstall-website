@@ -1,7 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const Technologies: React.FC = () => {
+interface TechnologiesProps {
+  onTechnologyClick?: (technologyName: string) => void;
+}
+
+const Technologies: React.FC<TechnologiesProps> = ({ onTechnologyClick }) => {
   const techCategories = [
     {
       category: 'Frontend Technologies',
@@ -150,13 +154,27 @@ const Technologies: React.FC = () => {
               id={`tech-category-${categoryIndex}`}
               data-category-name={category.category}
               variants={categoryVariants}
-              className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10"
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              onClick={() => onTechnologyClick?.(category.category)}
+              className="bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10 hover:border-white/20 transition-all duration-300 cursor-pointer relative group"
             >
-              <div className="text-center mb-8">
+              <div className="text-center mb-8 relative">
                 <h3 className="text-2xl md:text-3xl font-poppins font-bold mb-2">
                   {category.category}
                 </h3>
                 <div className={`w-24 h-1 bg-gradient-to-r ${category.color} rounded-full mx-auto`}></div>
+                
+                {/* Clickable Indicator */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileHover={{ opacity: 1, scale: 1 }}
+                  className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-all duration-300"
+                >
+                  <div className="bg-white text-gray-800 px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
+                    Get Quote →
+                  </div>
+                </motion.div>
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -241,9 +259,7 @@ const Technologies: React.FC = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-white text-primary font-semibold py-3 px-8 rounded-lg hover:shadow-xl transition-all duration-300"
-              onClick={() => {
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-              }}
+              onClick={() => onTechnologyClick?.('Technology Consultation')}
             >
               Start Your Project
             </motion.button>
