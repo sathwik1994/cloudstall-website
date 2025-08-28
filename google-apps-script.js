@@ -4,8 +4,8 @@
  */
 
 // Configuration - Replace these with your actual Google Sheets IDs
-const CONTACT_FORM_SHEET_ID = 'YOUR_CONTACT_FORM_SHEET_ID_HERE';
-const PROJECT_INQUIRY_SHEET_ID = 'YOUR_PROJECT_INQUIRY_SHEET_ID_HERE';
+const CONTACT_FORM_SHEET_ID = '1ZoKwQhg0l03hpQgNvNxvQ8sFLF3ndq1r12Swy3207xU';
+const PROJECT_INQUIRY_SHEET_ID = '1GnWl1KyT0Dokv-PynfylAhG-l1qDSUeGrvA6VVHdVyU';
 
 function doPost(e) {
   try {

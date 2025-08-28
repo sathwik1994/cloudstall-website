@@ -4,7 +4,7 @@
  */
 
 // Replace this with your Google Apps Script web app URL after deployment
-const GOOGLE_APPS_SCRIPT_URL = process.env.REACT_APP_GOOGLE_SHEETS_URL || 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz9KgmpIvAjVLKED98HIWZVN0-EsFL5xOn4ehqYDw1DLFqFlUepLi_zzqNeMDrWEAK-/exec';
 
 export interface ContactFormData {
   formType: 'contact';
@@ -50,7 +50,7 @@ export async function submitToGoogleSheets(data: FormSubmissionData): Promise<Su
   try {
     console.log('Submitting form data:', data.formType, data);
 
-    if (GOOGLE_APPS_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+    if (GOOGLE_APPS_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbz9KgmpIvAjVLKED98HIWZVN0-EsFL5xOn4ehqYDw1DLFqFlUepLi_zzqNeMDrWEAK-/exec') {
       throw new Error('Google Apps Script URL not configured. Please set REACT_APP_GOOGLE_SHEETS_URL environment variable.');
     }
 
