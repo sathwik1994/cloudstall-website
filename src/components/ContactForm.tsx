@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle, Send, AlertCircle } from 'lucide-react';
-import { submitToGoogleSheets, isValidEmail, isValidPhone, sanitizeFormData, ContactFormData } from '../utils/googleSheetsApi';
+import { submitToGoogleSheets, isValidEmail, isValidPhone, sanitizeFormData, type ContactFormData } from '../utils/googleSheetsApi';
 
 interface ContactFormProps {
   onBack: () => void;

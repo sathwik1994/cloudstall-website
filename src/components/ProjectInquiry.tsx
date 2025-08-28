@@ -12,7 +12,7 @@ import {
   FileText,
   AlertCircle
 } from 'lucide-react';
-import { submitToGoogleSheets, isValidEmail, isValidPhone, sanitizeFormData, ProjectInquiryData } from '../utils/googleSheetsApi';
+import { submitToGoogleSheets, isValidEmail, isValidPhone, sanitizeFormData, type ProjectInquiryData } from '../utils/googleSheetsApi';
 
 interface ProjectInquiryProps {
   selectedService?: string;
@@ -145,8 +145,8 @@ const ProjectInquiry: React.FC<ProjectInquiryProps> = ({
         email: formData.email,
         phone: formData.phone,
         company: formData.company,
-        website: formData.website,
-        primaryService: formData.primaryService,
+        website: '', // Not collected in this form
+        primaryService: formData.selectedService,
         timeline: formData.timeline,
         budget: formData.budget,
         teamSize: formData.teamSize,
