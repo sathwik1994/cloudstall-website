@@ -29,7 +29,7 @@ jobs:
     - name: Build project
       run: npm run build
       env:
-        REACT_APP_GOOGLE_SHEETS_URL: https://script.google.com/macros/s/AKfycbxI4z3h-gb5iMSWWWvwPQfq3jPot7wxS5GTnQK5r78c3eJbW2DjC3FiKoGhiS0GXK1Y/exec
+        REACT_APP_GOOGLE_SHEETS_URL: https://script.google.com/macros/s/AKfycbyS1hWA_RxpczJDQ-t__V5FK60HII0NaSkCZoIJuTDDpIypIgcFv9BJyr7Xt9pbs7NY/exec
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
