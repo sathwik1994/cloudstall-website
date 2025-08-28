@@ -165,9 +165,8 @@ const ProjectInquiry: React.FC<ProjectInquiryProps> = ({
         setIsSubmitted(true);
         console.log('Project inquiry submitted successfully:', result);
         
-        // If form submission method was used (opens new tab), redirect back after 2 seconds
-        // If normal API method was used, redirect after 3 seconds
-        const redirectDelay = result.message?.includes('Check the new tab') ? 2000 : 3000;
+        // Redirect back after 3 seconds
+        const redirectDelay = 3000;
         
         setTimeout(() => {
           setIsSubmitted(false);
@@ -221,9 +220,6 @@ const ProjectInquiry: React.FC<ProjectInquiryProps> = ({
             <p className="text-sm opacity-90">2. Initial Consultation Call</p>
             <p className="text-sm opacity-90">3. Detailed Proposal & Timeline</p>
           </div>
-          <p className="text-xs font-open-sans text-gray-400">
-            If a new tab opened, you can check it for submission confirmation.
-          </p>
         </div>
       </motion.div>
     );

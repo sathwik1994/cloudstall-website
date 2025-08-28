@@ -88,9 +88,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack }) => {
         setIsSubmitted(true);
         console.log('Contact form submitted successfully:', result);
         
-        // If form submission method was used (opens new tab), redirect back after 2 seconds
-        // If normal API method was used, redirect after 3 seconds
-        const redirectDelay = result.message?.includes('Check the new tab') ? 2000 : 3000;
+        // Redirect back after 3 seconds
+        const redirectDelay = 3000;
         
         setTimeout(() => {
           onBack();
@@ -124,9 +123,6 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack }) => {
           </p>
           <p className="text-sm font-open-sans text-gray-500">
             Redirecting you back to our website...
-          </p>
-          <p className="text-xs font-open-sans text-gray-400 mt-2">
-            If a new tab opened, you can check it for submission confirmation.
           </p>
         </div>
       </motion.div>
