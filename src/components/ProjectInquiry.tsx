@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   ArrowLeft, 
@@ -23,6 +23,11 @@ const ProjectInquiry: React.FC<ProjectInquiryProps> = ({
   selectedTechnology, 
   onBack 
 }) => {
+  // Ensure page starts at top on mobile
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, []);
+
   const [formData, setFormData] = useState({
     // Basic Info
     name: '',
@@ -51,7 +56,8 @@ const ProjectInquiry: React.FC<ProjectInquiryProps> = ({
     additionalServices: [] as string[],
     
     // Additional Info
-    additionalRequirements: ''
+    additionalRequirements: '',
+    customTechnology: ''
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -118,7 +124,8 @@ const ProjectInquiry: React.FC<ProjectInquiryProps> = ({
     'React', 'Angular', 'Vue.js', 'Node.js', 'Python', 'Java',
     'AWS', 'Azure', 'Google Cloud', 'Docker', 'Kubernetes',
     'TensorFlow', 'PyTorch', 'React Native', 'Flutter',
-    'PostgreSQL', 'MongoDB', 'MySQL', 'Redis'
+    'PostgreSQL', 'MongoDB', 'MySQL', 'Redis',
+    'Workday', 'SAP', 'Data Analysis', 'Power BI', 'Tableau', 'Excel'
   ];
 
   const additionalServicesList = [
@@ -312,6 +319,7 @@ const ProjectInquiry: React.FC<ProjectInquiryProps> = ({
                       <option value="AI & Machine Learning">AI & Machine Learning</option>
                       <option value="SAP Implementation">SAP Implementation</option>
                       <option value="Workday Solutions">Workday Solutions</option>
+                      <option value="Data Analysis & BI">Data Analysis & BI</option>
                       <option value="Cloud Solutions">Cloud Solutions</option>
                       <option value="Mobile Development">Mobile Development</option>
                       <option value="Web Applications">Web Applications</option>
@@ -349,25 +357,44 @@ const ProjectInquiry: React.FC<ProjectInquiryProps> = ({
                 <Code className="w-6 h-6 mr-2 text-primary" />
                 Technology Requirements
               </h3>
-              <div className="space-y-4">
-                <p className="text-sm text-gray-600">Select all technologies you're interested in or currently use:</p>
-                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                  {technologies.map((tech) => (
-                    <label
-                      key={tech}
-                      className="flex items-center space-x-2 cursor-pointer group"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={formData.additionalTechnologies.includes(tech)}
-                        onChange={() => handleMultiSelect('additionalTechnologies', tech)}
-                        className="rounded border-gray-300 text-primary focus:ring-primary"
-                      />
-                      <span className="text-sm text-gray-700 group-hover:text-primary transition-colors duration-300">
-                        {tech}
-                      </span>
-                    </label>
-                  ))}
+              <div className="space-y-6">
+                <div>
+                  <p className="text-sm text-gray-600 mb-4">Select all technologies you're interested in or currently use:</p>
+                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                    {technologies.map((tech) => (
+                      <label
+                        key={tech}
+                        className="flex items-center space-x-2 cursor-pointer group"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={formData.additionalTechnologies.includes(tech)}
+                          onChange={() => handleMultiSelect('additionalTechnologies', tech)}
+                          className="rounded border-gray-300 text-primary focus:ring-primary"
+                        />
+                        <span className="text-sm text-gray-700 group-hover:text-primary transition-colors duration-300">
+                          {tech}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Other Technologies (Custom)
+                  </label>
+                  <input
+                    type="text"
+                    name="customTechnology"
+                    value={formData.customTechnology}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300"
+                    placeholder="e.g., Salesforce, Oracle, Dynamics 365, custom frameworks..."
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Specify any technologies not listed above, separated by commas
+                  </p>
                 </div>
               </div>
             </div>

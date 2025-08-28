@@ -104,7 +104,7 @@ const Hero: React.FC<HeroProps> = ({ onGetStartedClick }) => {
               className="btn-primary group inline-flex items-center text-lg"
               onClick={onGetStartedClick}
             >
-              Start Your Project
+              Contact Us
               <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
             </motion.button>
             

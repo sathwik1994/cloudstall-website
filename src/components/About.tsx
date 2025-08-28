@@ -27,10 +27,10 @@ const About: React.FC = () => {
   ];
 
   const stats = [
-    { number: '10+', label: 'Years of Experience', description: 'Proven track record in technology consulting' },
-    { number: '500+', label: 'Successful Projects', description: 'Delivered across various industries and scales' },
+    { number: '5+', label: 'Years of Experience', description: 'Proven track record in technology consulting' },
+    { number: '100+', label: 'Successful Projects', description: 'Delivered across various industries and scales' },
     { number: '50+', label: 'Expert Consultants', description: 'Certified professionals in latest technologies' },
-    { number: '25+', label: 'Countries Served', description: 'Global reach with local expertise' }
+    { number: '10+', label: 'Countries Served', description: 'Global reach with local expertise' }
   ];
 
   return (
@@ -48,7 +48,7 @@ const About: React.FC = () => {
             About <span className="text-gradient">Cloudstall</span>
           </h2>
           <p className="text-xl font-open-sans text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            We are a leading technology consultancy firm dedicated to transforming businesses through 
+            We are a leading technology firm dedicated to transforming businesses through 
             innovative solutions and cutting-edge implementations.
           </p>
         </motion.div>

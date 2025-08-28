@@ -10,9 +10,10 @@ import Technologies from './components/Technologies';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ProjectInquiry from './components/ProjectInquiry';
+import ContactForm from './components/ContactForm';
 
 function App() {
-  const [currentView, setCurrentView] = useState<'home' | 'project-inquiry'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'project-inquiry' | 'contact-form'>('home');
   const [selectedService, setSelectedService] = useState<string>('');
   const [selectedTechnology, setSelectedTechnology] = useState<string>('');
 
@@ -29,18 +30,30 @@ function App() {
     setSelectedService(serviceName);
     setSelectedTechnology('');
     setCurrentView('project-inquiry');
+    // Use setTimeout to ensure the component has rendered before scrolling
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }, 100);
   };
 
   const handleTechnologyClick = (technologyName: string) => {
     setSelectedTechnology(technologyName);
     setSelectedService('');
     setCurrentView('project-inquiry');
+    // Use setTimeout to ensure the component has rendered before scrolling
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }, 100);
   };
 
   const handleGetStartedClick = () => {
     setSelectedService('');
     setSelectedTechnology('');
-    setCurrentView('project-inquiry');
+    setCurrentView('contact-form');
+    // Use setTimeout to ensure the component has rendered before scrolling
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }, 100);
   };
 
   const handleBackToHome = () => {
@@ -54,6 +67,14 @@ function App() {
       <ProjectInquiry
         selectedService={selectedService}
         selectedTechnology={selectedTechnology}
+        onBack={handleBackToHome}
+      />
+    );
+  }
+
+  if (currentView === 'contact-form') {
+    return (
+      <ContactForm
         onBack={handleBackToHome}
       />
     );

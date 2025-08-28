@@ -128,7 +128,7 @@ const Footer: React.FC = () => {
         } else if (item === 'Contact') {
           document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
         } else if (item === 'Our Team') {
-          alert('👥 Our Team: We have 50+ expert consultants across 25+ countries. Meet our team page is coming soon!');
+          alert('👥 Our Team: We have 50+ expert consultants working from our headquarters and remote locations. Meet our team page is coming soon!');
         } else if (item === 'Careers') {
           alert('🚀 Careers: Join our growing team! We\'re always looking for talented developers and consultants. Send your resume to careers@cloudstall.net');
         } else if (item === 'Case Studies') {
@@ -271,7 +271,7 @@ const Footer: React.FC = () => {
                 <div className="flex items-center space-x-3">
                   <Mail className="w-5 h-5 text-primary flex-shrink-0" />
                   <a href="mailto:hello@cloudstall.net" className="font-open-sans text-gray-300 hover:text-white transition-colors duration-300">
-                    hello@cloudstall.net
+                    hr@cloudstall.net
                   </a>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -283,7 +283,7 @@ const Footer: React.FC = () => {
                 <div className="flex items-center space-x-3">
                   <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
                   <span className="font-open-sans text-gray-300">
-                    Global offices in 25+ countries
+                    27475 Ferry Rd, Warrenville, IL 60555
                   </span>
                 </div>
               </div>
@@ -339,7 +339,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Newsletter Signup */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
@@ -371,7 +371,7 @@ const Footer: React.FC = () => {
                 </motion.button>
               </div>
             </div>
-          </motion.div>
+          </motion.div> */}
         </div>
 
         {/* Bottom Bar */}
