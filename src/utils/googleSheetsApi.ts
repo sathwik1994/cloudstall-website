@@ -50,10 +50,6 @@ export async function submitToGoogleSheets(data: FormSubmissionData): Promise<Su
   try {
     console.log('Submitting form data:', data.formType, data);
 
-    if (GOOGLE_APPS_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbz9KgmpIvAjVLKED98HIWZVN0-EsFL5xOn4ehqYDw1DLFqFlUepLi_zzqNeMDrWEAK-/exec') {
-      throw new Error('Google Apps Script URL not configured. Please set REACT_APP_GOOGLE_SHEETS_URL environment variable.');
-    }
-
     const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
       method: 'POST',
       mode: 'cors',
