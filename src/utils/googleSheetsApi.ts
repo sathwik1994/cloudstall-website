@@ -101,8 +101,8 @@ export function isValidEmail(email: string): boolean {
  * Validate phone number format (basic validation)
  */
 export function isValidPhone(phone: string): boolean {
-  const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-  return phoneRegex.test(phone.replace(/[\s\-\(\)]/g, ''));
+  const phoneRegex = /^[+]?[1-9][\d]{0,15}$/;
+  return phoneRegex.test(phone.replace(/[\s\-()]/g, ''));
 }
 
 /**
@@ -113,9 +113,9 @@ export function sanitizeFormData<T extends FormSubmissionData>(data: T): T {
   
   // Trim string values
   Object.keys(sanitized).forEach(key => {
-    const value = (sanitized as any)[key];
+    const value = sanitized[key as keyof T];
     if (typeof value === 'string') {
-      (sanitized as any)[key] = value.trim();
+      (sanitized as unknown as Record<string, unknown>)[key] = value.trim();
     }
   });
   
