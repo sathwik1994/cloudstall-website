@@ -96,7 +96,7 @@ export function submitViaForm(data: FormSubmissionData): Promise<SubmissionRespo
           // Even if we can't read the response, the form was submitted
           document.body.removeChild(form);
           document.body.removeChild(iframe);
-          
+          console.log(error);
           resolve({
             success: true,
             message: 'Form submitted successfully to Google Sheets.',
