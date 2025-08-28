@@ -13,8 +13,8 @@ const Contact: React.FC = () => {
     {
       icon: Phone,
       title: 'Call Us',
-      content: '+1 (555) 123-4567',
-      link: 'tel:+15551234567'
+      content: '+1 (630) 828-6620',
+      link: 'tel:+16308286620'
     },
     {
       icon: MapPin,
@@ -150,7 +150,7 @@ const Contact: React.FC = () => {
 
               {/* Schedule Call Button */}
               <motion.a
-                href="tel:+15551234567"
+                href="tel:+16308286620"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full bg-white text-primary border-2 border-primary font-semibold py-4 px-6 rounded-lg hover:bg-primary hover:text-white transition-all duration-300 flex items-center justify-center group"

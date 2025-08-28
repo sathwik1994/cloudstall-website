@@ -261,7 +261,7 @@ const ProjectInquiry: React.FC<ProjectInquiryProps> = ({
                     value={formData.phone}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300"
-                    placeholder="+1 (555) 123-4567"
+                    placeholder="+1 (630) 828-6620"
                   />
                 </div>
               </div>
