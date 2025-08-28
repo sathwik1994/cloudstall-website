@@ -1,6 +1,6 @@
 /**
  * Google Apps Script for handling Cloudstall website form submissions
- * Handles both JSON (fetch) and form data submissions
+ * Handles both JSON (fetch) and form data submissions with proper CORS
  */
 
 // Configuration - Replace these with your actual Google Sheets IDs
@@ -13,6 +13,11 @@ function doPost(e) {
 
 function doGet(e) {
   return handleRequest(e);
+}
+
+function doOptions(e) {
+  // Handle preflight CORS requests
+  return createCorsResponse('', 'OPTIONS request handled');
 }
 
 function handleRequest(e) {
@@ -68,11 +73,11 @@ function handleRequest(e) {
       throw new Error('Invalid or missing form type. Received: ' + data.formType);
     }
     
-    return createResponse(result);
+    return createCorsResponse(result);
     
   } catch (error) {
     console.error('Error in handleRequest:', error);
-    return createResponse({
+    return createCorsResponse({
       success: false,
       error: error.toString(),
       timestamp: new Date().toISOString()
@@ -80,10 +85,18 @@ function handleRequest(e) {
   }
 }
 
-function createResponse(data) {
+function createCorsResponse(data, debugMessage = '') {
+  const jsonOutput = typeof data === 'string' ? data : JSON.stringify(data);
+  
   return ContentService
-    .createTextOutput(JSON.stringify(data))
-    .setMimeType(ContentService.MimeType.JSON);
+    .createTextOutput(jsonOutput)
+    .setMimeType(ContentService.MimeType.JSON)
+    .setHeader('Access-Control-Allow-Origin', '*')
+    .setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
+    .setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control')
+    .setHeader('Access-Control-Allow-Credentials', 'false')
+    .setHeader('Access-Control-Max-Age', '1728000')
+    .setHeader('Content-Type', 'application/json; charset=UTF-8');
 }
 
 function handleContactForm(data) {
