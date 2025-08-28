@@ -80,6 +80,16 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack }) => {
       });
 
       console.log('Submitting contact form:', submissionData);
+      
+      // Debug: Show what we're about to send
+      console.log('Form data being sent:', {
+        formType: submissionData.formType,
+        name: submissionData.name,
+        email: submissionData.email,
+        phone: submissionData.phone,
+        company: submissionData.company,
+        message: submissionData.message
+      });
 
       // Submit to Google Sheets
       const result = await submitToGoogleSheets(submissionData);

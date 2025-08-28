@@ -63,14 +63,25 @@ export function submitViaForm(data: FormSubmissionData): Promise<SubmissionRespo
       form.action = GOOGLE_APPS_SCRIPT_URL;
       form.target = 'form-submit-frame'; // Submit to iframe instead of new tab
       form.style.display = 'none';
+      form.enctype = 'application/x-www-form-urlencoded'; // Ensure proper encoding
       
-      // Add form data as hidden inputs
+      // Add form data as hidden inputs - ensure proper encoding
       Object.entries(data).forEach(([key, value]) => {
         const input = document.createElement('input');
         input.type = 'hidden';
         input.name = key;
-        input.value = Array.isArray(value) ? value.join(', ') : String(value);
+        
+        // Handle different value types properly
+        if (Array.isArray(value)) {
+          input.value = value.join(', ');
+        } else if (value !== null && value !== undefined) {
+          input.value = String(value);
+        } else {
+          input.value = '';
+        }
+        
         form.appendChild(input);
+        console.log(`Form field: ${key} = ${input.value}`);
       });
       
       // Add form to DOM and submit
@@ -136,6 +147,24 @@ export function submitViaForm(data: FormSubmissionData): Promise<SubmissionRespo
  * Submit form data to Google Sheets via Google Apps Script
  * Due to persistent CORS issues, we'll use form submission method directly
  */
+/**
+ * Test function to submit data with GET request for debugging
+ */
+export async function testGoogleSheetsConnection(data: FormSubmissionData): Promise<void> {
+  const params = new URLSearchParams();
+  Object.entries(data).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      params.append(key, value.join(', '));
+    } else {
+      params.append(key, String(value || ''));
+    }
+  });
+  
+  const testUrl = `${GOOGLE_APPS_SCRIPT_URL}?${params.toString()}`;
+  console.log('Test URL:', testUrl);
+  window.open(testUrl, '_blank');
+}
+
 export async function submitToGoogleSheets(data: FormSubmissionData): Promise<SubmissionResponse> {
   console.log('Submitting form data directly via form method (bypassing CORS):', data.formType, data);
   
