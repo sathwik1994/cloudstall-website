@@ -95,7 +95,7 @@ const Footer: React.FC = () => {
 
   const handleFooterClick = (section: string, item: string) => {
     switch (section) {
-      case 'Services':
+      case 'Services': {
         // Map footer service names to actual service card names
         const serviceMapping: { [key: string]: string } = {
           'AI & Machine Learning': 'AI & Machine Learning',
@@ -116,6 +116,7 @@ const Footer: React.FC = () => {
           document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
         }
         break;
+      }
       
       case 'Technologies':
         // Directly highlight the technology category (which will also scroll to it)
