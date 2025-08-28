@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle, Send, AlertCircle } from 'lucide-react';
-import { submitToGoogleSheets, isValidEmail, isValidPhone, sanitizeFormData, type ContactFormData } from '../utils/googleSheetsApi';
+import { submitToGoogleSheets, isValidEmail, isValidPhone, sanitizeFormData, testGoogleSheetsConnection, type ContactFormData } from '../utils/googleSheetsApi';
 
 interface ContactFormProps {
   onBack: () => void;
@@ -113,6 +113,20 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack }) => {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleTestSubmission = () => {
+    const testData: ContactFormData = {
+      formType: 'contact',
+      name: 'Test User',
+      email: 'test@example.com',
+      phone: '+1234567890',
+      company: 'Test Company',
+      message: 'This is a test message from the debug function'
+    };
+    
+    console.log('Testing with data:', testData);
+    testGoogleSheetsConnection(testData);
   };
 
   if (isSubmitted) {
@@ -270,29 +284,42 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack }) => {
                 </motion.div>
               )}
 
-              <motion.button
-                type="submit"
-                disabled={isSubmitting}
-                whileHover={isSubmitting ? {} : { scale: 1.02 }}
-                whileTap={isSubmitting ? {} : { scale: 0.98 }}
-                className={`w-full font-semibold py-4 px-8 rounded-lg transition-all duration-300 inline-flex items-center justify-center ${
-                  isSubmitting 
-                    ? 'bg-gray-400 cursor-not-allowed text-white' 
-                    : 'bg-primary text-white hover:bg-primary/90'
-                }`}
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="w-5 h-5 mr-2 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-5 h-5 mr-2" />
-                    Send Message
-                  </>
-                )}
-              </motion.button>
+              <div className="space-y-4">
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  whileHover={isSubmitting ? {} : { scale: 1.02 }}
+                  whileTap={isSubmitting ? {} : { scale: 0.98 }}
+                  className={`w-full font-semibold py-4 px-8 rounded-lg transition-all duration-300 inline-flex items-center justify-center ${
+                    isSubmitting 
+                      ? 'bg-gray-400 cursor-not-allowed text-white' 
+                      : 'bg-primary text-white hover:bg-primary/90'
+                  }`}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 mr-2 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5 mr-2" />
+                      Send Message
+                    </>
+                  )}
+                </motion.button>
+                
+                {/* Debug button - temporary for testing */}
+                <motion.button
+                  type="button"
+                  onClick={handleTestSubmission}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full font-semibold py-2 px-8 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 transition-all duration-300"
+                >
+                  🔧 Test Google Sheets Connection (Debug)
+                </motion.button>
+              </div>
             </form>
 
             <div className="mt-8 pt-8 border-t border-gray-200 text-center">
