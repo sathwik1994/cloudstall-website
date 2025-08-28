@@ -9,8 +9,10 @@ import {
   Code,
   Users,
   Target,
-  FileText
+  FileText,
+  AlertCircle
 } from 'lucide-react';
+import { submitToGoogleSheets, isValidEmail, isValidPhone, sanitizeFormData, ProjectInquiryData } from '../utils/googleSheetsApi';
 
 interface ProjectInquiryProps {
   selectedService?: string;
@@ -61,6 +63,8 @@ const ProjectInquiry: React.FC<ProjectInquiryProps> = ({
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -79,45 +83,104 @@ const ProjectInquiry: React.FC<ProjectInquiryProps> = ({
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError(null);
     
-    // Basic validation
+    // Validation
     if (!formData.name.trim()) {
-      alert('Please enter your name');
+      setSubmitError('Please enter your name');
+      setIsSubmitting(false);
       return;
     }
-    if (!formData.email.trim() || !formData.email.includes('@')) {
-      alert('Please enter a valid email address');
+
+    if (!formData.email.trim()) {
+      setSubmitError('Please enter your email address');
+      setIsSubmitting(false);
       return;
     }
+
+    if (!isValidEmail(formData.email)) {
+      setSubmitError('Please enter a valid email address');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (formData.phone && !isValidPhone(formData.phone)) {
+      setSubmitError('Please enter a valid phone number');
+      setIsSubmitting(false);
+      return;
+    }
+
     if (!formData.projectName.trim()) {
-      alert('Please enter a project name');
+      setSubmitError('Please enter a project name');
+      setIsSubmitting(false);
       return;
     }
+
     if (!formData.projectDescription.trim()) {
-      alert('Please provide a project description');
+      setSubmitError('Please provide a project description');
+      setIsSubmitting(false);
       return;
     }
+
     if (!formData.timeline) {
-      alert('Please select a timeline');
+      setSubmitError('Please select a timeline');
+      setIsSubmitting(false);
       return;
     }
+
     if (!formData.budget) {
-      alert('Please select a budget range');
+      setSubmitError('Please select a budget range');
+      setIsSubmitting(false);
       return;
     }
-    
-    console.log('Project Inquiry Submitted:', formData);
-    setIsSubmitted(true);
-    
-    // Reset form after 5 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      if (onBack) {
-        onBack();
+
+    try {
+      // Prepare data for Google Sheets
+      const submissionData: ProjectInquiryData = sanitizeFormData({
+        formType: 'project-inquiry',
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        website: formData.website,
+        primaryService: formData.primaryService,
+        timeline: formData.timeline,
+        budget: formData.budget,
+        teamSize: formData.teamSize,
+        additionalTechnologies: formData.additionalTechnologies,
+        additionalServices: formData.additionalServices,
+        additionalRequirements: `Project: ${formData.projectName}\n\nDescription: ${formData.projectDescription}\n\nAdditional: ${formData.additionalRequirements}`,
+        customTechnology: formData.customTechnology,
+      });
+
+      console.log('Submitting project inquiry:', submissionData);
+
+      // Submit to Google Sheets
+      const result = await submitToGoogleSheets(submissionData);
+
+      if (result.success) {
+        setIsSubmitted(true);
+        console.log('Project inquiry submitted successfully:', result);
+        
+        // Reset form after 5 seconds
+        setTimeout(() => {
+          setIsSubmitted(false);
+          if (onBack) {
+            onBack();
+          }
+        }, 5000);
+      } else {
+        setSubmitError(result.error || 'Failed to submit inquiry. Please try again.');
       }
-    }, 5000);
+    } catch (error) {
+      console.error('Error submitting project inquiry:', error);
+      setSubmitError('An error occurred while submitting the form. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const technologies = [
@@ -572,15 +635,41 @@ const ProjectInquiry: React.FC<ProjectInquiryProps> = ({
               ></textarea>
             </div>
 
+            {/* Error Display */}
+            {submitError && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center"
+              >
+                <AlertCircle className="w-5 h-5 text-red-500 mr-3 flex-shrink-0" />
+                <p className="text-red-700 text-sm">{submitError}</p>
+              </motion.div>
+            )}
+
             {/* Submit Button */}
             <motion.button
               type="submit"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full bg-gradient-to-r from-primary to-secondary text-white font-semibold py-4 px-6 rounded-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center text-lg"
+              disabled={isSubmitting}
+              whileHover={isSubmitting ? {} : { scale: 1.02 }}
+              whileTap={isSubmitting ? {} : { scale: 0.98 }}
+              className={`w-full font-semibold py-4 px-6 rounded-lg transition-all duration-300 flex items-center justify-center text-lg ${
+                isSubmitting 
+                  ? 'bg-gray-400 cursor-not-allowed text-white' 
+                  : 'bg-gradient-to-r from-primary to-secondary text-white hover:shadow-xl'
+              }`}
             >
-              <Send className="w-5 h-5 mr-2" />
-              Submit Project Inquiry
+              {isSubmitting ? (
+                <>
+                  <div className="w-5 h-5 mr-2 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Submitting...
+                </>
+              ) : (
+                <>
+                  <Send className="w-5 h-5 mr-2" />
+                  Submit Project Inquiry
+                </>
+              )}
             </motion.button>
           </form>
         </motion.div>

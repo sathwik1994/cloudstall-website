@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, CheckCircle, Send } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Send, AlertCircle } from 'lucide-react';
+import { submitToGoogleSheets, isValidEmail, isValidPhone, sanitizeFormData, ContactFormData } from '../utils/googleSheetsApi';
 
 interface ContactFormProps {
   onBack: () => void;
@@ -20,6 +21,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack }) => {
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -29,14 +32,75 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack }) => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Contact form submitted:', formData);
-    setIsSubmitted(true);
-    
-    setTimeout(() => {
-      onBack();
-    }, 3000);
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    // Validate form data
+    if (!formData.name.trim()) {
+      setSubmitError('Please enter your name');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!formData.email.trim()) {
+      setSubmitError('Please enter your email address');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!isValidEmail(formData.email)) {
+      setSubmitError('Please enter a valid email address');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (formData.phone && !isValidPhone(formData.phone)) {
+      setSubmitError('Please enter a valid phone number');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!formData.message.trim()) {
+      setSubmitError('Please enter your message');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      // Prepare data for Google Sheets
+      const submissionData: ContactFormData = sanitizeFormData({
+        formType: 'contact',
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        message: formData.message,
+      });
+
+      console.log('Submitting contact form:', submissionData);
+
+      // Submit to Google Sheets
+      const result = await submitToGoogleSheets(submissionData);
+
+      if (result.success) {
+        setIsSubmitted(true);
+        console.log('Contact form submitted successfully:', result);
+        
+        // Redirect back to home after 3 seconds
+        setTimeout(() => {
+          onBack();
+        }, 3000);
+      } else {
+        setSubmitError(result.error || 'Failed to submit form. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      setSubmitError('An error occurred while submitting the form. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {
@@ -182,14 +246,40 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack }) => {
                 ></textarea>
               </div>
 
+              {/* Error Display */}
+              {submitError && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-center"
+                >
+                  <AlertCircle className="w-5 h-5 text-red-500 mr-3 flex-shrink-0" />
+                  <p className="text-red-700 text-sm">{submitError}</p>
+                </motion.div>
+              )}
+
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-primary text-white font-semibold py-4 px-8 rounded-lg hover:bg-primary/90 transition-all duration-300 inline-flex items-center justify-center"
+                disabled={isSubmitting}
+                whileHover={isSubmitting ? {} : { scale: 1.02 }}
+                whileTap={isSubmitting ? {} : { scale: 0.98 }}
+                className={`w-full font-semibold py-4 px-8 rounded-lg transition-all duration-300 inline-flex items-center justify-center ${
+                  isSubmitting 
+                    ? 'bg-gray-400 cursor-not-allowed text-white' 
+                    : 'bg-primary text-white hover:bg-primary/90'
+                }`}
               >
-                <Send className="w-5 h-5 mr-2" />
-                Send Message
+                {isSubmitting ? (
+                  <>
+                    <div className="w-5 h-5 mr-2 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5 mr-2" />
+                    Send Message
+                  </>
+                )}
               </motion.button>
             </form>
 
