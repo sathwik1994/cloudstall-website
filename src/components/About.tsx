@@ -48,7 +48,7 @@ const About: React.FC = () => {
             About <span className="text-gradient">Cloudstall</span>
           </h2>
           <p className="text-xl font-open-sans text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            We are a leading technology firm dedicated to transforming businesses through 
+            We are a leading technology consultancy firm dedicated to transforming businesses through 
             innovative solutions and cutting-edge implementations.
           </p>
         </motion.div>
