@@ -44,6 +44,49 @@ export interface SubmissionResponse {
 }
 
 /**
+ * Submit form data to Google Sheets via Google Apps Script using form submission (no CORS)
+ */
+export function submitViaForm(data: FormSubmissionData): Promise<SubmissionResponse> {
+  return new Promise((resolve) => {
+    console.log('Submitting form data via form method:', data.formType, data);
+    
+    // Create a hidden form
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = GOOGLE_APPS_SCRIPT_URL;
+    form.target = '_blank'; // Open in new tab to see response
+    form.style.display = 'none';
+    
+    // Add form data as hidden inputs
+    Object.entries(data).forEach(([key, value]) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = Array.isArray(value) ? value.join(', ') : String(value);
+      form.appendChild(input);
+    });
+    
+    // Add form to DOM and submit
+    document.body.appendChild(form);
+    form.submit();
+    
+    // Clean up
+    setTimeout(() => {
+      document.body.removeChild(form);
+    }, 1000);
+    
+    // Since form submission opens in new tab, we assume success
+    // In a real implementation, you might want to implement a callback mechanism
+    resolve({
+      success: true,
+      message: 'Form submitted successfully. Check the new tab for confirmation.',
+      timestamp: new Date().toISOString(),
+      formType: data.formType
+    });
+  });
+}
+
+/**
  * Submit form data to Google Sheets via Google Apps Script
  */
 export async function submitToGoogleSheets(data: FormSubmissionData): Promise<SubmissionResponse> {
@@ -75,6 +118,12 @@ export async function submitToGoogleSheets(data: FormSubmissionData): Promise<Su
     
   } catch (error) {
     console.error('Error submitting form to Google Sheets:', error);
+    
+    // If CORS error, try form submission method
+    if (error instanceof Error && (error.message.includes('CORS') || error.message.includes('fetch'))) {
+      console.log('CORS error detected, trying form submission method...');
+      return submitViaForm(data);
+    }
     
     // Return error response in consistent format
     return {

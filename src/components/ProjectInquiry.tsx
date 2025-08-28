@@ -165,13 +165,16 @@ const ProjectInquiry: React.FC<ProjectInquiryProps> = ({
         setIsSubmitted(true);
         console.log('Project inquiry submitted successfully:', result);
         
-        // Reset form after 5 seconds
+        // If form submission method was used (opens new tab), redirect back after 2 seconds
+        // If normal API method was used, redirect after 3 seconds
+        const redirectDelay = result.message?.includes('Check the new tab') ? 2000 : 3000;
+        
         setTimeout(() => {
           setIsSubmitted(false);
           if (onBack) {
             onBack();
           }
-        }, 5000);
+        }, redirectDelay);
       } else {
         setSubmitError(result.error || 'Failed to submit inquiry. Please try again.');
       }
@@ -212,12 +215,15 @@ const ProjectInquiry: React.FC<ProjectInquiryProps> = ({
           <p className="text-lg font-open-sans text-gray-600 mb-6">
             Your project inquiry has been submitted successfully. Our team will review your requirements and get back to you within 24 hours with a detailed proposal.
           </p>
-          <div className="bg-gradient-to-r from-primary to-secondary text-white p-4 rounded-lg">
+          <div className="bg-gradient-to-r from-primary to-secondary text-white p-4 rounded-lg mb-4">
             <p className="font-semibold">What's Next?</p>
             <p className="text-sm opacity-90">1. Requirements Review (24 hours)</p>
             <p className="text-sm opacity-90">2. Initial Consultation Call</p>
             <p className="text-sm opacity-90">3. Detailed Proposal & Timeline</p>
           </div>
+          <p className="text-xs font-open-sans text-gray-400">
+            If a new tab opened, you can check it for submission confirmation.
+          </p>
         </div>
       </motion.div>
     );
