@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, Cloud } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,14 +45,13 @@ const Header: React.FC = () => {
             whileHover={{ scale: 1.05 }}
             className="flex items-center space-x-2"
           >
-            <div className="flex items-center space-x-2">
-              <div className="relative">
-                <Cloud className="w-8 h-8 text-primary" />
-                <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full opacity-20 blur-sm"></div>
-              </div>
-              <span className="text-2xl font-poppins font-bold text-gray-800">
-                Cloud<span className="text-primary">stall</span>
-              </span>
+            <div className="relative">
+              <img 
+                src="https://www.cloudstall.net/wp-content/uploads/2021/04/WhatsApp-Image-2021-04-29-at-7.01.10-PM.png" 
+                alt="Cloudstall Logo" 
+                className="h-30 w-auto object-contain"
+                style={{ height: '7.5rem' }}
+              />
             </div>
           </motion.div>
 

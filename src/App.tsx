@@ -86,7 +86,7 @@ function App() {
       <Hero onGetStartedClick={handleGetStartedClick} />
       <About />
       <Services onServiceClick={handleServiceClick} />
-      <Technologies onTechnologyClick={handleTechnologyClick} />
+      {/* <Technologies onTechnologyClick={handleTechnologyClick} /> */}
       <Contact />
       <Footer />
     </div>

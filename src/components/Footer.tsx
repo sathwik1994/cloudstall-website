@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Cloud, 
   Mail, 
   Phone, 
   MapPin, 
@@ -251,14 +250,15 @@ const Footer: React.FC = () => {
               className="lg:col-span-2"
             >
               {/* Logo */}
-              <div className="flex items-center space-x-2 mb-6">
-                <div className="relative">
-                  <Cloud className="w-8 h-8 text-primary" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full opacity-20 blur-sm"></div>
+              <div className="mb-6">
+                <div className="relative inline-block">
+                  <img 
+                    src="https://www.cloudstall.net/wp-content/uploads/2021/04/WhatsApp-Image-2021-04-29-at-7.01.10-PM.png" 
+                    alt="Cloudstall Logo" 
+                    className="h-30 w-auto object-contain"
+                    style={{ height: '7.5rem' }}
+                  />
                 </div>
-                <span className="text-2xl font-poppins font-bold">
-                  Cloud<span className="text-primary">stall</span>
-                </span>
               </div>
 
               <p className="font-open-sans text-gray-300 mb-6 leading-relaxed">
