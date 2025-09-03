@@ -66,7 +66,7 @@ const Hero: React.FC<HeroProps> = ({ onGetStartedClick }) => {
           >
             <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
             <span className="text-sm font-medium text-gray-700">
-              Trusted by 500+ Companies Worldwide
+              Trusted by 50+ Companies Worldwide
             </span>
           </motion.div>
 
