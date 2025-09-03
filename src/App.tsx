@@ -6,7 +6,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
 import Services from './components/Services';
-import Technologies from './components/Technologies';
+// import Technologies from './components/Technologies';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ProjectInquiry from './components/ProjectInquiry';
@@ -36,15 +36,15 @@ function App() {
     }, 100);
   };
 
-  const handleTechnologyClick = (technologyName: string) => {
-    setSelectedTechnology(technologyName);
-    setSelectedService('');
-    setCurrentView('project-inquiry');
-    // Use setTimeout to ensure the component has rendered before scrolling
-    setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    }, 100);
-  };
+  // const handleTechnologyClick = (technologyName: string) => {
+  //   setSelectedTechnology(technologyName);
+  //   setSelectedService('');
+  //   setCurrentView('project-inquiry');
+  //   // Use setTimeout to ensure the component has rendered before scrolling
+  //   setTimeout(() => {
+  //     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  //   }, 100);
+  // };
 
   const handleGetStartedClick = () => {
     setSelectedService('');
