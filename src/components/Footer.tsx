@@ -224,7 +224,7 @@ const Footer: React.FC = () => {
   ];
 
   const socialLinks = [
-    { icon: Linkedin, href: 'https://linkedin.com/company/cloudstall', name: 'LinkedIn' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/company/cloudstall-inc/', name: 'LinkedIn' },
     { icon: Twitter, href: 'https://twitter.com/cloudstall', name: 'Twitter' },
     { icon: Github, href: 'https://github.com/cloudstall', name: 'GitHub' },
     { icon: Instagram, href: 'https://instagram.com/cloudstall', name: 'Instagram' }
