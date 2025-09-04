@@ -10,6 +10,7 @@ import {
   Instagram,
   ArrowUp
 } from 'lucide-react';
+import cloudstallLogo from '../assets/cloudstall-logo.png';
 
 const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -253,7 +254,7 @@ const Footer: React.FC = () => {
               <div className="mb-6">
                 <div className="relative inline-block">
                   <img 
-                    src="https://www.cloudstall.net/wp-content/uploads/2021/04/WhatsApp-Image-2021-04-29-at-7.01.10-PM.png" 
+                    src={cloudstallLogo} 
                     alt="Cloudstall Logo" 
                     className="h-30 w-auto object-contain"
                     style={{ height: '7.5rem' }}

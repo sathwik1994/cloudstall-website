@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import cloudstallLogo from '../assets/cloudstall-logo.png';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -47,7 +48,7 @@ const Header: React.FC = () => {
           >
             <div className="relative">
               <img 
-                src="https://www.cloudstall.net/wp-content/uploads/2021/04/WhatsApp-Image-2021-04-29-at-7.01.10-PM.png" 
+                src={cloudstallLogo} 
                 alt="Cloudstall Logo" 
                 className="h-30 w-auto object-contain"
                 style={{ height: '7.5rem' }}
