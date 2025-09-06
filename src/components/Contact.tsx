@@ -7,8 +7,8 @@ const Contact: React.FC = () => {
     {
       icon: Mail,
       title: 'Email Us',
-      content: 'hr@cloudstall.net',
-      link: 'mailto:hr@cloudstall.net'
+      content: 'info@cloudstall.net',
+      link: 'mailto:info@cloudstall.net'
     },
     {
       icon: Phone,
@@ -138,7 +138,7 @@ const Contact: React.FC = () => {
             <div className="space-y-6">
               {/* Email Us Button */}
               <motion.a
-                href="mailto:hr@cloudstall.net?subject=Project Inquiry&body=Hi, I'm interested in discussing a project with Cloudstall."
+                href="mailto:info@cloudstall.net?subject=Project Inquiry&body=Hi, I'm interested in discussing a project with Cloudstall."
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full bg-gradient-to-r from-primary to-secondary text-white font-semibold py-4 px-6 rounded-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group"

@@ -272,8 +272,8 @@ const Footer: React.FC = () => {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <Mail className="w-5 h-5 text-primary flex-shrink-0" />
-                  <a href="mailto:hello@cloudstall.net" className="font-open-sans text-gray-300 hover:text-white transition-colors duration-300">
-                    hr@cloudstall.net
+                  <a href="mailto:info@cloudstall.net" className="font-open-sans text-gray-300 hover:text-white transition-colors duration-300">
+                    info@cloudstall.net
                   </a>
                 </div>
                 <div className="flex items-center space-x-3">
