@@ -10,12 +10,12 @@ const Contact: React.FC = () => {
       content: 'info@cloudstall.net',
       link: 'mailto:info@cloudstall.net'
     },
-    {
-      icon: Phone,
-      title: 'Call Us',
-      content: '+1 (630) 828-6620',
-      link: 'tel:+16308286620'
-    },
+    // {
+    //   icon: Phone,
+    //   title: 'Call Us',
+    //   content: '+1 (630) 828-6620',
+    //   link: 'tel:+16308286620'
+    // },
     {
       icon: MapPin,
       title: 'Visit Us',
@@ -149,7 +149,7 @@ const Contact: React.FC = () => {
               </motion.a>
 
               {/* Schedule Call Button */}
-              <motion.a
+              {/* <motion.a
                 href="tel:+16308286620"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -158,7 +158,7 @@ const Contact: React.FC = () => {
                 <Phone className="w-5 h-5 mr-2" />
                 Call Us Now
                 <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-              </motion.a>
+              </motion.a> */}
 
               <div className="text-center py-6">
                 <div className="w-full h-px bg-gray-200 relative">
@@ -194,14 +194,10 @@ const Contact: React.FC = () => {
                 <div className="space-y-2 text-sm font-open-sans text-gray-600">
                   <div className="flex justify-between">
                     <span>Monday - Friday</span>
-                    <span>9:00 AM - 6:00 PM EST</span>
+                    <span>9:00 AM - 5:00 PM CST</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Saturday</span>
-                    <span>10:00 AM - 4:00 PM EST</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Sunday</span>
+                    <span>Saturday & Sunday</span>
                     <span>Closed</span>
                   </div>
                 </div>
