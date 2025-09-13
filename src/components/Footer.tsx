@@ -4,10 +4,7 @@ import {
   Mail, 
   Phone, 
   MapPin, 
-  Linkedin, 
-  Twitter, 
-  Github, 
-  Instagram,
+  Linkedin,
   ArrowUp,
   ArrowDown
 } from 'lucide-react';
@@ -36,7 +33,6 @@ const Footer: React.FC<FooterProps> = ({ onCareersClick }) => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
       
       // Consider "near top" if scrolled less than 20% of viewport height
       setIsNearTop(scrollY < windowHeight * 0.2);

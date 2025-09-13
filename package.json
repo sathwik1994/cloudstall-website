@@ -3,14 +3,15 @@
   "private": false,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://sathwik1994.github.io/cloudstall-website",
+  "homepage": "https://cloudstall.net",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "build:hostgator": "tsc -b && vite build --mode production"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.16",
