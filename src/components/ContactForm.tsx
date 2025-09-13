@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle, Send, AlertCircle } from 'lucide-react';
-import { submitToGoogleSheets, isValidEmail, isValidPhone, sanitizeFormData, testGoogleSheetsConnection, type ContactFormData } from '../utils/googleSheetsApi';
+import { submitToGoogleSheets, isValidEmail, isValidPhone, sanitizeFormData, type ContactFormData } from '../utils/googleSheetsApi';
 
 interface ContactFormProps {
   onBack: () => void;
@@ -115,20 +115,6 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack }) => {
     }
   };
 
-  const handleTestSubmission = () => {
-    const testData: ContactFormData = {
-      formType: 'contact',
-      name: 'Test User',
-      email: 'test@example.com',
-      phone: '+1234567890',
-      company: 'Test Company',
-      message: 'This is a test message from the debug function'
-    };
-    
-    console.log('Testing with data:', testData);
-    testGoogleSheetsConnection(testData);
-  };
-
   if (isSubmitted) {
     return (
       <motion.div
@@ -166,7 +152,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack }) => {
               className="inline-flex items-center text-primary hover:text-primary/80 transition-colors duration-300 mr-6"
             >
               <ArrowLeft className="w-5 h-5 mr-2" />
-              Back to Website
+              Back to Home
             </motion.button>
             <div>
               <h1 className="text-2xl font-poppins font-bold text-gray-900">Contact Us</h1>
@@ -310,7 +296,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack }) => {
                 </motion.button>
                 
                 {/* Debug button - temporary for testing */}
-                <motion.button
+                {/* <motion.button
                   type="button"
                   onClick={handleTestSubmission}
                   whileHover={{ scale: 1.02 }}
@@ -318,7 +304,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onBack }) => {
                   className="w-full font-semibold py-2 px-8 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 transition-all duration-300"
                 >
                   🔧 Test Google Sheets Connection (Debug)
-                </motion.button>
+                </motion.button> */}
               </div>
             </form>
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Mail, 
-  Phone, 
   MapPin, 
   Linkedin,
   ArrowUp,
@@ -346,12 +345,12 @@ const Footer: React.FC<FooterProps> = ({ onCareersClick }) => {
                     info@cloudstall.net
                   </a>
                 </div>
-                <div className="flex items-center space-x-3">
+                {/* <div className="flex items-center space-x-3">
                   <Phone className="w-5 h-5 text-primary flex-shrink-0" />
                   <a href="tel:+16308286620" className="font-open-sans text-gray-300 hover:text-white transition-colors duration-300">
                     +1 (630) 828-6620
                   </a>
-                </div>
+                </div> */}
                 <div className="flex items-center space-x-3">
                   <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
                   <span className="font-open-sans text-gray-300">
