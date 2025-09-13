@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Mail, 
@@ -8,13 +8,70 @@ import {
   Twitter, 
   Github, 
   Instagram,
-  ArrowUp
+  ArrowUp,
+  ArrowDown
 } from 'lucide-react';
 import cloudstallLogo from '../assets/cloudstall-logo.png';
+import AlertModal from './AlertModal';
 
-const Footer: React.FC = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+interface FooterProps {
+  onCareersClick?: () => void;
+}
+
+const Footer: React.FC<FooterProps> = ({ onCareersClick }) => {
+  const [isNearTop, setIsNearTop] = useState(true);
+  const [alertModal, setAlertModal] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    type?: 'info' | 'success' | 'warning';
+  }>({
+    isOpen: false,
+    title: '',
+    message: '',
+    type: 'info'
+  });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      // Consider "near top" if scrolled less than 20% of viewport height
+      setIsNearTop(scrollY < windowHeight * 0.2);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial position
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleScrollClick = () => {
+    if (isNearTop) {
+      // Scroll down to footer section
+      window.scrollTo({ 
+        top: document.documentElement.scrollHeight, 
+        behavior: 'smooth' 
+      });
+    } else {
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const showAlert = (title: string, message: string, type: 'info' | 'success' | 'warning' = 'info') => {
+    setAlertModal({
+      isOpen: true,
+      title,
+      message,
+      type
+    });
+  };
+
+  const closeAlert = () => {
+    setAlertModal(prev => ({ ...prev, isOpen: false }));
   };
 
   const highlightServiceCard = (serviceName: string) => {
@@ -101,11 +158,15 @@ const Footer: React.FC = () => {
           'AI & Machine Learning': 'AI & Machine Learning',
           'SAP Implementation': 'SAP Implementation',
           'Workday Solutions': 'Workday Solutions',
-          'Cloud Solutions': 'Cloud Solutions',
-          'Mobile Development': 'Mobile App Development',
+          'Frontend Development': 'Frontend Development',
+          'Backend Development': 'Backend Development',
+          'Mobile App Development': 'Mobile App Development',
           'Web Applications': 'Web Applications',
+          'Cloud Solutions': 'Cloud Solutions',
+          'Cybersecurity': 'Cybersecurity',
           'System Integration': 'System Integration',
-          'Cybersecurity': 'Cybersecurity'
+          'Performance Optimization': 'Performance Optimization',
+          'Data Analysis & BI': 'Data Analysis & BI'
         };
         
         const targetService = serviceMapping[item];
@@ -129,17 +190,21 @@ const Footer: React.FC = () => {
         } else if (item === 'Contact') {
           document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
         } else if (item === 'Our Team') {
-          alert('👥 Our Team: We have 50+ expert consultants working from our headquarters and remote locations. Meet our team page is coming soon!');
+          showAlert('👥 Our Team', 'We have 50+ expert consultants working from our headquarters and remote locations. Meet our team page is coming soon!', 'info');
         } else if (item === 'Careers') {
-          alert('🚀 Careers: Join our growing team! We\'re always looking for talented developers and consultants. Send your resume to careers@cloudstall.net');
+          if (onCareersClick) {
+            onCareersClick();
+          } else {
+            showAlert('🚀 Careers', 'Join our growing team! We\'re always looking for talented developers and consultants. Send your resume to careers@cloudstall.net', 'success');
+          }
         } else if (item === 'Case Studies') {
-          alert('📊 Case Studies: Explore our 500+ successful projects. Detailed case studies are being prepared!');
+          showAlert('📊 Case Studies', 'Explore our 500+ successful projects. Detailed case studies are being prepared!', 'info');
         } else if (item === 'Blog') {
-          alert('📝 Blog: Stay tuned for tech insights, tutorials, and industry trends. Our blog is launching soon!');
+          showAlert('📝 Blog', 'Stay tuned for tech insights, tutorials, and industry trends. Our blog is launching soon!', 'info');
         } else if (item === 'News & Events') {
-          alert('📢 News & Events: Follow our latest company updates and upcoming events. Coming soon!');
+          showAlert('📢 News & Events', 'Follow our latest company updates and upcoming events. Coming soon!', 'info');
         } else if (item === 'Partners') {
-          alert('🤝 Partners: We work with leading technology companies worldwide. Partner directory coming soon!');
+          showAlert('🤝 Partners', 'We work with leading technology companies worldwide. Partner directory coming soon!', 'info');
         }
         break;
       
@@ -147,19 +212,19 @@ const Footer: React.FC = () => {
         if (item === 'Support Center') {
           document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
         } else if (item === 'Documentation') {
-          alert('📚 Documentation: Comprehensive guides and API documentation are being prepared. Subscribe to our newsletter for updates!');
+          showAlert('📚 Documentation', 'Comprehensive guides and API documentation are being prepared. Subscribe to our newsletter for updates!', 'info');
         } else if (item === 'API Reference') {
-          alert('🔧 API Reference: Complete API documentation with examples coming soon. Contact us for early access!');
+          showAlert('🔧 API Reference', 'Complete API documentation with examples coming soon. Contact us for early access!', 'info');
         } else if (item === 'Community Forum') {
-          alert('💬 Community Forum: Connect with other developers and get support. Forum launching soon!');
+          showAlert('💬 Community Forum', 'Connect with other developers and get support. Forum launching soon!', 'info');
         } else if (item === 'Training') {
-          alert('🎓 Training: Professional training programs on latest technologies. Course catalog coming soon!');
+          showAlert('🎓 Training', 'Professional training programs on latest technologies. Course catalog coming soon!', 'info');
         } else if (item === 'Certification') {
-          alert('🏆 Certification: Get certified in cutting-edge technologies. Certification program launching soon!');
+          showAlert('🏆 Certification', 'Get certified in cutting-edge technologies. Certification program launching soon!', 'warning');
         } else if (item === 'White Papers') {
-          alert('📄 White Papers: In-depth research and industry insights. Technical papers coming soon!');
+          showAlert('📄 White Papers', 'In-depth research and industry insights. Technical papers coming soon!', 'info');
         } else if (item === 'Webinars') {
-          alert('🎥 Webinars: Live sessions with our experts. Webinar schedule will be announced soon!');
+          showAlert('🎥 Webinars', 'Live sessions with our experts. Webinar schedule will be announced soon!', 'info');
         }
         break;
       
@@ -175,26 +240,30 @@ const Footer: React.FC = () => {
         'AI & Machine Learning',
         'SAP Implementation', 
         'Workday Solutions',
-        'Cloud Solutions',
-        'Mobile Development',
+        'Frontend Development',
+        'Backend Development',
+        'Mobile App Development',
         'Web Applications',
+        'Cloud Solutions',
+        'Cybersecurity',
         'System Integration',
-        'Cybersecurity'
+        'Performance Optimization',
+        'Data Analysis & BI'
       ]
     },
-    {
-      title: 'Technologies',
-      links: [
-        'React & Angular',
-        'Node.js & Express',
-        'Python & Django',
-        'AWS & Google Cloud',
-        'Docker & Kubernetes',
-        'TensorFlow & PyTorch',
-        'React Native & Flutter',
-        'PostgreSQL & MongoDB'
-      ]
-    },
+    // {
+    //   title: 'Technologies',
+    //   links: [
+    //     'React & Angular',
+    //     'Node.js & Express',
+    //     'Python & Django',
+    //     'AWS & Google Cloud',
+    //     'Docker & Kubernetes',
+    //     'TensorFlow & PyTorch',
+    //     'React Native & Flutter',
+    //     'PostgreSQL & MongoDB'
+    //   ]
+    // },
     {
       title: 'Company',
       links: [
@@ -223,12 +292,12 @@ const Footer: React.FC = () => {
     }
   ];
 
-  const socialLinks = [
-    { icon: Linkedin, href: 'https://www.linkedin.com/company/cloudstall-inc/', name: 'LinkedIn' },
-    { icon: Twitter, href: 'https://twitter.com/cloudstall', name: 'Twitter' },
-    { icon: Github, href: 'https://github.com/cloudstall', name: 'GitHub' },
-    { icon: Instagram, href: 'https://instagram.com/cloudstall', name: 'Instagram' }
-  ];
+  // const socialLinks = [
+  //   { icon: Linkedin, href: 'https://www.linkedin.com/company/cloudstall-inc/', name: 'LinkedIn' },
+  //   { icon: Twitter, href: 'https://twitter.com/cloudstall', name: 'Twitter' },
+  //   { icon: Github, href: 'https://github.com/cloudstall', name: 'GitHub' },
+  //   { icon: Instagram, href: 'https://instagram.com/cloudstall', name: 'Instagram' }
+  // ];
 
   return (
     <footer className="bg-gray-900 text-white relative overflow-hidden">
@@ -240,8 +309,8 @@ const Footer: React.FC = () => {
 
       <div className="relative z-10">
         {/* Main Footer Content */}
-        <div className="container mx-auto px-6 lg:px-8 pt-16 pb-8">
-          <div className="grid grid-cols-1 lg:grid-cols-6 gap-8">
+        <div className="container mx-auto px-6 lg:px-8 pt-8 pb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
             {/* Company Info */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -252,11 +321,16 @@ const Footer: React.FC = () => {
             >
               {/* Logo */}
               <div className="mb-6">
-                <div className="relative inline-block">
+                <div 
+                  className="relative inline-block cursor-pointer"
+                  onClick={() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                >
                   <img 
                     src={cloudstallLogo} 
                     alt="Cloudstall Logo" 
-                    className="h-30 w-auto object-contain"
+                    className="h-30 w-auto object-contain hover:scale-105 transition-transform duration-300"
                     style={{ height: '7.5rem' }}
                   />
                 </div>
@@ -290,8 +364,23 @@ const Footer: React.FC = () => {
                 </div>
               </div>
 
-              {/* Social Links */}
-              <div className="flex space-x-4 mt-6">
+              {/* LinkedIn Link */}
+              <div className="mt-6">
+                <motion.a
+                  href="https://www.linkedin.com/company/cloudstall-inc/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center space-x-3 px-4 py-2 bg-gradient-to-br from-primary to-secondary rounded-lg hover:from-primary/90 hover:to-secondary/90 transition-all duration-300"
+                >
+                  <Linkedin className="w-5 h-5" />
+                  <span className="font-open-sans text-sm">Follow us on LinkedIn</span>
+                </motion.a>
+              </div>
+
+              {/* Social Links - Moved LinkedIn next to logo */}
+              {/* <div className="flex space-x-4 mt-6">
                 {socialLinks.map((social, index) => (
                   <motion.a
                     key={index}
@@ -306,7 +395,7 @@ const Footer: React.FC = () => {
                     <social.icon className="w-5 h-5" />
                   </motion.a>
                 ))}
-              </div>
+              </div> */}
             </motion.div>
 
             {/* Footer Sections */}
@@ -317,6 +406,7 @@ const Footer: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: (sectionIndex + 1) * 0.1 }}
                 viewport={{ once: true }}
+                className="lg:col-span-1"
               >
                 <h3 className="text-lg font-poppins font-semibold mb-4 text-white">
                   {section.title}
@@ -386,19 +476,19 @@ const Footer: React.FC = () => {
               
               <div className="flex items-center space-x-6 mt-4 md:mt-0">
                 <button 
-                  onClick={() => alert('Privacy Policy: We respect your privacy and protect your personal information. Full policy document is being prepared.')}
+                  onClick={() => showAlert('🔒 Privacy Policy', 'We respect your privacy and protect your personal information. Full policy document is being prepared.', 'info')}
                   className="font-open-sans text-gray-400 hover:text-white text-sm transition-colors duration-300 hover:underline"
                 >
                   Privacy Policy
                 </button>
                 <button 
-                  onClick={() => alert('Terms of Service: Our comprehensive terms of service document is being finalized. Contact us for any questions.')}
+                  onClick={() => showAlert('📋 Terms of Service', 'Our comprehensive terms of service document is being finalized. Contact us for any questions.', 'info')}
                   className="font-open-sans text-gray-400 hover:text-white text-sm transition-colors duration-300 hover:underline"
                 >
                   Terms of Service
                 </button>
                 <button 
-                  onClick={() => alert('Cookie Policy: We use essential cookies to improve your experience. Full cookie policy coming soon.')}
+                  onClick={() => showAlert('🍪 Cookie Policy', 'We use essential cookies to improve your experience. Full cookie policy coming soon.', 'info')}
                   className="font-open-sans text-gray-400 hover:text-white text-sm transition-colors duration-300 hover:underline"
                 >
                   Cookie Policy
@@ -408,17 +498,38 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Scroll to Top Button */}
+        {/* Dynamic Scroll Button */}
         <motion.button
-          onClick={scrollToTop}
+          onClick={handleScrollClick}
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           className="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-50"
+          title={isNearTop ? "Scroll to Footer" : "Scroll to Top"}
         >
-          <ArrowUp className="w-6 h-6 text-white" />
+          <motion.div
+            key={isNearTop ? 'down' : 'up'}
+            initial={{ opacity: 0, rotate: 180 }}
+            animate={{ opacity: 1, rotate: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {isNearTop ? (
+              <ArrowDown className="w-6 h-6 text-white" />
+            ) : (
+              <ArrowUp className="w-6 h-6 text-white" />
+            )}
+          </motion.div>
         </motion.button>
+
+        {/* Alert Modal */}
+        <AlertModal
+          isOpen={alertModal.isOpen}
+          onClose={closeAlert}
+          title={alertModal.title}
+          message={alertModal.message}
+          type={alertModal.type}
+        />
       </div>
     </footer>
   );

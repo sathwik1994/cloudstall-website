@@ -11,9 +11,10 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ProjectInquiry from './components/ProjectInquiry';
 import ContactForm from './components/ContactForm';
+import Careers from './components/Careers';
 
 function App() {
-  const [currentView, setCurrentView] = useState<'home' | 'project-inquiry' | 'contact-form'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'project-inquiry' | 'contact-form' | 'careers'>('home');
   const [selectedService, setSelectedService] = useState<string>('');
   const [selectedTechnology, setSelectedTechnology] = useState<string>('');
 
@@ -56,6 +57,13 @@ function App() {
     }, 100);
   };
 
+  const handleCareersClick = () => {
+    setCurrentView('careers');
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }, 100);
+  };
+
   const handleBackToHome = () => {
     setCurrentView('home');
     setSelectedService('');
@@ -80,15 +88,23 @@ function App() {
     );
   }
 
+  if (currentView === 'careers') {
+    return (
+      <Careers
+        onBack={handleBackToHome}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen">
-      <Header />
+      <Header onCareersClick={handleCareersClick} />
       <Hero onGetStartedClick={handleGetStartedClick} />
       <About />
       <Services onServiceClick={handleServiceClick} />
       {/* <Technologies onTechnologyClick={handleTechnologyClick} /> */}
       <Contact />
-      <Footer />
+      <Footer onCareersClick={handleCareersClick} />
     </div>
   );
 }

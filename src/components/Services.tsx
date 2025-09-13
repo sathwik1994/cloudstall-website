@@ -37,7 +37,7 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
       description: 'Full-scale SAP deployment, customization, and optimization for enterprise resource planning and business processes.',
       features: ['SAP S/4HANA', 'SAP Analytics', 'SAP Integration', 'Migration Services'],
       color: 'from-blue-500 to-indigo-600',
-      featured: false
+      featured: true
     },
     {
       icon: Users,
@@ -118,14 +118,6 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
       features: ['Power BI', 'Tableau', 'Data Warehousing', 'Advanced Analytics'],
       color: 'from-emerald-500 to-cyan-500',
       featured: true
-    },
-    {
-      icon: Cpu,
-      title: 'IoT & Edge Computing',
-      description: 'Internet of Things solutions, edge computing implementations, and real-time data processing systems.',
-      features: ['IoT Platform Development', 'Edge Computing', 'Real-time Analytics', 'Device Management'],
-      color: 'from-teal-500 to-green-500',
-      featured: false
     }
   ];
 

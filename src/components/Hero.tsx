@@ -28,7 +28,7 @@ const Hero: React.FC<HeroProps> = ({ onGetStartedClick }) => {
           key={index}
           initial={{ opacity: 0, scale: 0 }}
           animate={{ 
-            opacity: 0.1,
+            opacity: 0.3,
             scale: 1,
             x: [0, x, 0],
             y: [0, y, 0],
@@ -40,9 +40,9 @@ const Hero: React.FC<HeroProps> = ({ onGetStartedClick }) => {
             repeatType: "reverse",
             ease: "easeInOut"
           }}
-          className="absolute hidden lg:block"
+          className="absolute hidden lg:block z-[5]"
           style={{
-            top: `${20 + index * 20}%`,
+            top: `${30 + index * 15}%`,
             left: `${10 + index * 25}%`,
           }}
         >

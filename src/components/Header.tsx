@@ -3,7 +3,11 @@ import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import cloudstallLogo from '../assets/cloudstall-logo.png';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  onCareersClick?: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onCareersClick }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -20,7 +24,8 @@ const Header: React.FC = () => {
     { label: 'Home', href: '#home' },
     { label: 'About', href: '#about' },
     { label: 'Services', href: '#services' },
-    { label: 'Technologies', href: '#technologies' },
+    // { label: 'Technologies', href: '#technologies' },
+    { label: 'Careers', href: '#careers' },
     { label: 'Contact', href: '#contact' },
   ];
 
@@ -44,7 +49,10 @@ const Header: React.FC = () => {
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="flex items-center space-x-2"
+            className="flex items-center space-x-2 cursor-pointer"
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           >
             <div className="relative">
               <img 
@@ -69,7 +77,11 @@ const Header: React.FC = () => {
                 className="font-open-sans font-medium text-gray-700 hover:text-primary transition-colors duration-300 relative group"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.querySelector(item.href)?.scrollIntoView({ behavior: 'smooth' });
+                  if (item.label === 'Careers' && onCareersClick) {
+                    onCareersClick();
+                  } else {
+                    document.querySelector(item.href)?.scrollIntoView({ behavior: 'smooth' });
+                  }
                 }}
               >
                 {item.label}
@@ -125,7 +137,11 @@ const Header: React.FC = () => {
                 className="block px-4 py-2 font-open-sans font-medium text-gray-700 hover:text-primary hover:bg-primary/5 transition-all duration-300 rounded-md"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.querySelector(item.href)?.scrollIntoView({ behavior: 'smooth' });
+                  if (item.label === 'Careers' && onCareersClick) {
+                    onCareersClick();
+                  } else {
+                    document.querySelector(item.href)?.scrollIntoView({ behavior: 'smooth' });
+                  }
                   setIsMenuOpen(false);
                 }}
               >
