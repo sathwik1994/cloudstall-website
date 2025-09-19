@@ -21,7 +21,6 @@ export interface TestimonialResult {
   name: string;
   position: string;
   company: string;
-  image: string;
   rating: number;
   feedback: string;
   project: string;
@@ -147,22 +146,11 @@ export const testFeedbacksSheetConnection = async (): Promise<{ success: boolean
 
 // Convert ApprovedFeedback to Testimonial format
 export const convertFeedbackToTestimonial = (feedback: ApprovedFeedback): TestimonialResult => {
-  // Generate a placeholder image based on name
-  const generateImage = (name: string) => {
-    const hash = name.split('').reduce((a, b) => {
-      a = ((a << 5) - a) + b.charCodeAt(0);
-      return a & a;
-    }, 0);
-    const imageNumber = Math.abs(hash % 70) + 1; // Use a range of available avatars
-    return `https://i.pravatar.cc/150?img=${imageNumber}`;
-  };
-
   return {
     id: feedback.id,
     name: feedback.name,
     position: feedback.position || 'Other',
     company: feedback.company || 'Valued Client',
-    image: generateImage(feedback.name),
     rating: feedback.rating,
     feedback: feedback.feedback,
     project: feedback.project || 'Service',

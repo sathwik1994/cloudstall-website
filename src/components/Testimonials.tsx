@@ -10,7 +10,6 @@ interface Testimonial {
   name: string;
   position: string;
   company: string;
-  image: string;
   rating: number;
   feedback: string;
   project: string;
@@ -25,66 +24,66 @@ const sampleTestimonials: Testimonial[] = [
       name: 'Sarah Johnson',
       position: 'CTO',
       company: 'TechFlow Solutions',
-      image: 'https://i.pravatar.cc/150?img=1',
       rating: 5,
       feedback: 'Cloudstall transformed our entire SAP infrastructure. Their expertise in S/4HANA implementation was exceptional, and they delivered the project 2 weeks ahead of schedule. The team\'s professionalism and technical depth exceeded our expectations.',
       project: 'SAP S/4HANA Implementation',
-      location: 'Chicago, IL'
+      location: 'Chicago, IL',
+      submitterType: 'Client'
     },
     {
       id: 'test-2',
       name: 'Michael Chen',
       position: 'VP of Engineering',
       company: 'DataVantage Corp',
-      image: 'https://i.pravatar.cc/150?img=2',
       rating: 5,
       feedback: 'The AI/ML solutions developed by Cloudstall have revolutionized our data analytics capabilities. Their custom machine learning models increased our prediction accuracy by 40% and saved us millions in operational costs.',
       project: 'AI/ML Analytics Platform',
-      location: 'San Francisco, CA'
+      location: 'San Francisco, CA',
+      submitterType: 'Client'
     },
     {
       id: 'test-3',
       name: 'Emily Rodriguez',
       position: 'HR Director',
       company: 'GlobalTech Industries',
-      image: 'https://i.pravatar.cc/150?img=3',
       rating: 5,
       feedback: 'Our Workday implementation with Cloudstall was seamless. They understood our complex HR requirements and delivered a solution that streamlined our entire human capital management process. Outstanding work!',
       project: 'Workday HCM Implementation',
-      location: 'Austin, TX'
+      location: 'Austin, TX',
+      submitterType: 'Client'
     },
     {
       id: 'test-4',
       name: 'David Thompson',
       position: 'IT Manager',
       company: 'RetailMax Solutions',
-      image: 'https://i.pravatar.cc/150?img=4',
       rating: 5,
       feedback: 'Cloudstall developed our e-commerce platform from scratch. The web application they built is fast, scalable, and user-friendly. Our online sales increased by 200% after launch. Highly recommended!',
       project: 'E-commerce Web Application',
-      location: 'New York, NY'
+      location: 'New York, NY',
+      submitterType: 'Client'
     },
     {
       id: 'test-5',
       name: 'Lisa Park',
       position: 'CIO',
       company: 'HealthCare Plus',
-      image: 'https://i.pravatar.cc/150?img=5',
       rating: 5,
       feedback: 'The mobile app developed by Cloudstall has been a game-changer for our patient engagement. The app is intuitive, secure, and has significantly improved our patient satisfaction scores. Excellent partnership!',
       project: 'Patient Engagement Mobile App',
-      location: 'Boston, MA'
+      location: 'Boston, MA',
+      submitterType: 'Client'
     },
     {
       id: 'test-6',
       name: 'James Wilson',
       position: 'Operations Director',
       company: 'Manufacturing Pro',
-      image: 'https://i.pravatar.cc/150?img=6',
       rating: 5,
       feedback: 'Cloudstall\'s cloud migration services helped us move our entire infrastructure to AWS with zero downtime. Their DevOps expertise and attention to detail made the transition smooth and cost-effective.',
       project: 'Cloud Migration & DevOps',
-      location: 'Detroit, MI'
+      location: 'Detroit, MI',
+      submitterType: 'Client'
     }
   ];
 
@@ -393,23 +392,9 @@ const Testimonials: React.FC = () => {
                   </blockquote>
 
                   {/* Client Info */}
-                  <div className="flex flex-col items-center text-center">
-                    {/* Client Photo */}
-                    <div className="relative mb-3">
-                      <img
-                        src={testimonial.image}
-                        alt={testimonial.name}
-                        className="w-12 h-12 rounded-full object-cover border-3 border-white shadow-md"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name)}&background=38b6ff&color=fff&size=150`;
-                        }}
-                      />
-                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
-                    </div>
-
+                  <div className="text-center">
                     {/* Client Details */}
-                    <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center justify-between mb-2">
                       <h4 className="font-poppins font-semibold text-gray-900 text-base">
                         {testimonial.name}
                       </h4>
@@ -422,7 +407,7 @@ const Testimonials: React.FC = () => {
                     <p className="text-primary font-medium text-sm">
                       {testimonial.position}
                     </p>
-                    <p className="text-gray-600 font-open-sans text-sm">
+                    <p className="text-gray-600 font-open-sans text-sm mb-2">
                       {testimonial.company}
                     </p>
 
