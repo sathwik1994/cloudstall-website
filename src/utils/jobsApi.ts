@@ -23,9 +23,9 @@ export interface Job {
 }
 
 // Google Sheets configuration for jobs
-const JOBS_SHEET_ID = process.env.REACT_APP_JOBS_SHEET_ID || 'your-jobs-sheet-id';
+const JOBS_SHEET_ID = import.meta.env.REACT_APP_JOBS_SHEET_ID || 'your-jobs-sheet-id';
 const JOBS_SHEET_NAME = 'Jobs'; // Sheet tab name
-const JOBS_API_KEY = process.env.REACT_APP_GOOGLE_SHEETS_API_KEY || 'your-api-key';
+const JOBS_API_KEY = import.meta.env.REACT_APP_GOOGLE_SHEETS_API_KEY || 'your-api-key';
 
 // Google Sheets API URL
 const getJobsSheetUrl = () => {
