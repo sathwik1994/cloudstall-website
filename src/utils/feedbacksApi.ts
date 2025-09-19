@@ -11,6 +11,7 @@ export interface ApprovedFeedback {
   rating: number;
   feedback: string;
   timestamp: string;
+  submitterType: string;
   approved: string;
 }
 
@@ -33,13 +34,15 @@ export interface SheetTestData {
 }
 
 // Google Sheets configuration for feedbacks
+// Column structure: A=Timestamp, B=Name, C=Email, D=Company, E=Position,
+// F=Project, G=Rating, H=Feedback, I=Source, J=SubmitterType, K=Approved
 const FEEDBACKS_SHEET_ID = '1UzIwQBH6WgIJlKKzbRM59pnUwcbUg3s12WB79wsymF0';
 const FEEDBACKS_SHEET_NAME = 'Sheet1'; // Default sheet name, adjust if needed
 const FEEDBACKS_API_KEY = import.meta.env.REACT_APP_GOOGLE_SHEETS_API_KEY || 'AIzaSyDS2BwnUNjxRfk4yyTDE8ZoxDa_J_zwsB8';
 
 // Google Sheets API URL for reading data
 const getFeedbacksSheetUrl = () => {
-  const range = `${FEEDBACKS_SHEET_NAME}!A:J`; // Columns A through J (including new Approved column)
+  const range = `${FEEDBACKS_SHEET_NAME}!A:K`; // Columns A through K (J=SubmitterType, K=Approved)
   return `https://sheets.googleapis.com/v4/spreadsheets/${FEEDBACKS_SHEET_ID}/values/${range}?key=${FEEDBACKS_API_KEY}`;
 };
 
@@ -51,8 +54,8 @@ const parseFeedbackFromRow = (row: string[], index: number): ApprovedFeedback | 
       return null;
     }
 
-    // Check if feedback is approved (column J - index 9)
-    const approvedValue = row[9]?.toString().trim().toLowerCase();
+    // Check if feedback is approved (column K - index 10)
+    const approvedValue = row[10]?.toString().trim().toLowerCase();
     if (approvedValue !== 'y' && approvedValue !== 'yes') {
       return null; // Skip non-approved feedbacks
     }
@@ -67,7 +70,8 @@ const parseFeedbackFromRow = (row: string[], index: number): ApprovedFeedback | 
       rating: parseInt(row[6]) || 5, // Column G
       feedback: row[7] || '', // Column H
       timestamp: row[0] || '', // Column A
-      approved: row[9] || '' // Column J
+      submitterType: row[9] || 'Client', // Column J
+      approved: row[10] || '' // Column K
     };
   } catch (error) {
     console.error('Error parsing feedback row:', error, row);
