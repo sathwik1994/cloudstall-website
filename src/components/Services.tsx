@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Brain, 
-  Database, 
-  Users, 
-  Code, 
-  Server, 
-  Smartphone, 
-  Globe, 
+import {
+  Brain,
+  Database,
+  Users,
+  Smartphone,
+  Globe,
   Settings,
   Zap,
   Shield,
@@ -20,9 +18,19 @@ interface ServicesProps {
 }
 
 const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
-  const [showAllServices, setShowAllServices] = useState(false);
-  
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
   const allServices = [
+    {
+      icon: Users,
+      title: 'Workday Solutions',
+      description: 'Complete Workday implementation for human capital management, financial management, and analytics.',
+      features: ['HCM Implementation', 'Financial Management', 'Workday Analytics', 'Integration Hub'],
+      color: 'from-green-500 to-teal-500',
+      featured: true
+    },
     {
       icon: Brain,
       title: 'AI & Machine Learning',
@@ -40,27 +48,11 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
       featured: true
     },
     {
-      icon: Users,
-      title: 'Workday Solutions',
-      description: 'Complete Workday implementation for human capital management, financial management, and analytics.',
-      features: ['HCM Implementation', 'Financial Management', 'Workday Analytics', 'Integration Hub'],
-      color: 'from-green-500 to-teal-500',
-      featured: true
-    },
-    {
-      icon: Code,
-      title: 'Frontend Development',
-      description: 'Modern, responsive web applications using React, Vue, Angular with latest UI/UX trends and performance optimization.',
-      features: ['React/Vue/Angular', 'TypeScript', 'PWA Development', 'UI/UX Design'],
-      color: 'from-orange-500 to-red-500',
-      featured: true
-    },
-    {
-      icon: Server,
-      title: 'Backend Development',
-      description: 'Scalable backend systems, APIs, microservices architecture, and cloud-native applications for enterprise needs.',
-      features: ['Node.js/Python/Java', 'Microservices', 'API Development', 'Database Design'],
-      color: 'from-cyan-500 to-blue-500',
+      icon: Globe,
+      title: 'Web Applications',
+      description: 'Full-stack web development from responsive frontends to scalable backends, APIs, and enterprise-grade applications.',
+      features: ['React/Vue/Angular', 'Node.js/Python/Java', 'Microservices/API Development', 'Database Design'],
+      color: 'from-emerald-500 to-green-500',
       featured: true
     },
     {
@@ -70,14 +62,6 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
       features: ['React Native', 'Flutter', 'iOS/Android Native', 'App Store Optimization'],
       color: 'from-indigo-500 to-purple-500',
       featured: true
-    },
-    {
-      icon: Globe,
-      title: 'Web Applications',
-      description: 'Enterprise-grade web applications with modern frameworks, progressive web apps, and cloud deployment.',
-      features: ['Full-Stack Development', 'PWA', 'Cloud Deployment', 'Performance Optimization'],
-      color: 'from-emerald-500 to-green-500',
-      featured: false
     },
     {
       icon: Cloud,
@@ -106,7 +90,7 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
     {
       icon: Zap,
       title: 'Performance Optimization',
-      description: 'Application performance tuning, database optimization, and infrastructure scaling for maximum efficiency.',
+      description: 'Application performance tuning, database optimization & infrastructure scaling for maximum efficiency.',
       features: ['Performance Tuning', 'Database Optimization', 'Load Balancing', 'Caching Strategies'],
       color: 'from-violet-500 to-purple-500',
       featured: false
@@ -121,7 +105,69 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
     }
   ];
 
-  const services = showAllServices ? allServices : allServices.filter(service => service.featured);
+  const services = allServices;
+
+  // Calculate how many cards can fit in viewport (responsive)
+  const getCardsPerView = () => {
+    if (typeof window !== 'undefined') {
+      if (window.innerWidth < 768) return 1; // Mobile: 1 card
+      if (window.innerWidth < 1024) return 2; // Tablet: 2 cards
+      if (window.innerWidth < 1280) return 3; // Desktop: 3 cards
+      return 4; // Large desktop: 4 cards
+    }
+    return 3; // Default
+  };
+
+  const [cardsPerView, setCardsPerView] = useState(getCardsPerView());
+  const totalSlides = Math.ceil(services.length / cardsPerView);
+
+  // Update cards per view on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setCardsPerView(getCardsPerView());
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Auto-scroll functionality
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % totalSlides);
+    }, 4000); // Change slide every 4 seconds
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, totalSlides]);
+
+  // Scroll to specific slide
+  const scrollToSlide = useCallback((slideIndex: number) => {
+    if (scrollContainerRef.current) {
+      const cardWidth = 320 + 24; // Card width + gap
+      const scrollPosition = slideIndex * cardWidth * cardsPerView;
+      scrollContainerRef.current.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth'
+      });
+    }
+  }, [cardsPerView]);
+
+  // Handle dot click
+  const handleDotClick = (slideIndex: number) => {
+    setCurrentSlide(slideIndex);
+    setIsAutoPlaying(false);
+    scrollToSlide(slideIndex);
+
+    // Resume auto-play after 10 seconds
+    setTimeout(() => setIsAutoPlaying(true), 10000);
+  };
+
+  // Scroll when currentSlide changes
+  useEffect(() => {
+    scrollToSlide(currentSlide);
+  }, [currentSlide, cardsPerView, scrollToSlide]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -167,28 +213,32 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
           </p>
         </motion.div>
 
-        {/* Services Grid */}
-        <motion.div
-          key={showAllServices ? 'all-services' : 'featured-services'}
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-        >
-          {services.map((service, index) => (
-            <motion.div
-              key={`${service.title}-${index}`}
-              id={`service-card-${index}`}
-              data-service-name={service.title}
-              variants={itemVariants}
-              whileHover={{ 
-                scale: 1.02,
-                translateY: -5
-              }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => onServiceClick?.(service.title)}
-              className="group relative overflow-hidden bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-primary/20"
-            >
+        {/* Services Carousel */}
+        <div className="relative">
+
+          <motion.div
+            ref={scrollContainerRef}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="flex overflow-x-auto scrollbar-hide space-x-6 pb-4 px-2"
+            onMouseEnter={() => setIsAutoPlaying(false)}
+            onMouseLeave={() => setIsAutoPlaying(true)}
+          >
+            {services.map((service, index) => (
+              <motion.div
+                key={`${service.title}-${index}`}
+                id={`service-card-${index}`}
+                data-service-name={service.title}
+                variants={itemVariants}
+                whileHover={{
+                  scale: 1.02,
+                  translateY: -5
+                }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => onServiceClick?.(service.title)}
+                className="group relative overflow-hidden bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-primary/20 flex-shrink-0 w-80"
+              >
               {/* Gradient Background on Hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
               
@@ -200,7 +250,7 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
                 </svg>
               </div>
               
-              <div className="relative p-6">
+              <div className="relative p-6 pb-4">
                 {/* Icon */}
                 <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${service.color} mb-4 group-hover:scale-110 transition-transform duration-300`}>
                   <service.icon className="w-6 h-6 text-white" />
@@ -232,58 +282,53 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
                   ))}
                 </div>
 
-                {/* Get Quote Button */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileHover={{ opacity: 1, y: 0 }}
-                  className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300"
-                >
-                  <div className="bg-primary text-white px-4 py-2 rounded-lg text-center text-sm font-semibold">
-                    Start Project Enquiry →
-                  </div>
-                </motion.div>
               </div>
-            </motion.div>
-          ))}
-        </motion.div>
+              </motion.div>
+            ))}
+          </motion.div>
 
-        {/* Toggle All Services Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mt-12"
-        >
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => setShowAllServices(!showAllServices)}
-            className="inline-flex items-center px-8 py-3 bg-primary/10 text-primary font-semibold rounded-lg hover:bg-primary hover:text-white transition-all duration-300 border-2 border-primary/20 hover:border-primary"
-          >
-            {showAllServices ? (
-              <>
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                </svg>
-                Show Featured Services
-              </>
-            ) : (
-              <>
-                View All {allServices.length} Services
-                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </>
-            )}
-          </motion.button>
-          <p className="text-sm text-gray-500 mt-2">
-            {showAllServices ? 
-              `Showing all ${allServices.length} services` : 
-              `Showing ${services.length} featured services`
-            }
-          </p>
-        </motion.div>
+          {/* Dot Indicators */}
+          <div className="flex justify-center mt-8 space-x-2">
+            {Array.from({ length: totalSlides }).map((_, index) => (
+              <motion.button
+                key={index}
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => handleDotClick(index)}
+                className={`relative w-3 h-3 rounded-full transition-all duration-300 ${
+                  currentSlide === index
+                    ? 'bg-primary scale-110'
+                    : 'bg-gray-300 hover:bg-gray-400'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              >
+                {/* Active indicator ring */}
+                {currentSlide === index && (
+                  <motion.div
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="absolute -inset-1 rounded-full border-2 border-primary/30"
+                  />
+                )}
+              </motion.button>
+            ))}
+          </div>
+
+          {/* Auto-play indicator */}
+          <div className="flex justify-center mt-4">
+            <div className="flex items-center space-x-2 text-xs text-gray-500">
+              <div className={`w-2 h-2 rounded-full ${isAutoPlaying ? 'bg-green-500' : 'bg-gray-400'} transition-colors duration-300`}></div>
+              <span>{isAutoPlaying ? 'Auto-playing' : 'Paused'}</span>
+              <button
+                onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+                className="text-primary hover:text-primary/80 underline ml-2"
+              >
+                {isAutoPlaying ? 'Pause' : 'Resume'}
+              </button>
+            </div>
+          </div>
+        </div>
+
 
         {/* Call to Action */}
         <motion.div

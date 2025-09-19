@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import ProjectInquiry from './components/ProjectInquiry';
 import ContactForm from './components/ContactForm';
 import Careers from './components/Careers';
+import Testimonials from './components/Testimonials';
 
 function App() {
   const [currentView, setCurrentView] = useState<'home' | 'project-inquiry' | 'contact-form' | 'careers'>('home');
@@ -103,6 +104,7 @@ function App() {
       <About />
       <Services onServiceClick={handleServiceClick} />
       {/* <Technologies onTechnologyClick={handleTechnologyClick} /> */}
+      <Testimonials />
       <Contact />
       <Footer onCareersClick={handleCareersClick} />
     </div>

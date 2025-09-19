@@ -232,11 +232,11 @@ const Footer: React.FC<FooterProps> = ({ onCareersClick }) => {
     {
       title: 'Services',
       links: [
+        'Workday Solutions',
         'AI & Machine Learning',
         'SAP Implementation', 
-        'Workday Solutions',
-        'Frontend Development',
-        'Backend Development',
+        // 'Frontend Development',
+        // 'Backend Development',
         'Mobile App Development',
         'Web Applications',
         'Cloud Solutions',
