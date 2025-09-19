@@ -325,7 +325,7 @@ const getFallbackJobs = (): Job[] => {
 };
 
 // Test connection to Google Sheets
-export const testJobsSheetConnection = async (): Promise<{ success: boolean; message: string; data?: any }> => {
+export const testJobsSheetConnection = async (): Promise<{ success: boolean; message: string; data?: { values?: string[][] } }> => {
   try {
     const response = await fetch(getJobsSheetUrl());
     

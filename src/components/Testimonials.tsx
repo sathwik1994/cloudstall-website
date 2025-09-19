@@ -17,31 +17,8 @@ interface Testimonial {
   location: string;
 }
 
-const Testimonials: React.FC = () => {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
-  const [feedbackForm, setFeedbackForm] = useState({
-    name: '',
-    email: '',
-    company: '',
-    position: '',
-    rating: 5,
-    feedback: '',
-    project: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [alertModal, setAlertModal] = useState({
-    isOpen: false,
-    title: '',
-    message: '',
-    type: 'info' as 'info' | 'success' | 'warning'
-  });
-  const [allTestimonials, setAllTestimonials] = useState<Testimonial[]>([]);
-  const [isLoadingFeedbacks, setIsLoadingFeedbacks] = useState(true);
-
-  const sampleTestimonials: Testimonial[] = [
+// Sample testimonials data (moved outside component to prevent dependency issues)
+const sampleTestimonials: Testimonial[] = [
     {
       id: 'test-1',
       name: 'Sarah Johnson',
@@ -110,6 +87,30 @@ const Testimonials: React.FC = () => {
     }
   ];
 
+const Testimonials: React.FC = () => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [feedbackForm, setFeedbackForm] = useState({
+    name: '',
+    email: '',
+    company: '',
+    position: '',
+    rating: 5,
+    feedback: '',
+    project: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [alertModal, setAlertModal] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    type: 'info' as 'info' | 'success' | 'warning'
+  });
+  const [allTestimonials, setAllTestimonials] = useState<Testimonial[]>([]);
+  const [isLoadingFeedbacks, setIsLoadingFeedbacks] = useState(true);
+
   // Fetch approved feedbacks from Google Sheets on component mount
   useEffect(() => {
     const loadFeedbacks = async () => {
@@ -135,7 +136,7 @@ const Testimonials: React.FC = () => {
     };
 
     loadFeedbacks();
-  }, []);
+  }, []); // sampleTestimonials is a constant, safe to exclude
 
   const testimonials = allTestimonials;
 

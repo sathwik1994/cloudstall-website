@@ -14,6 +14,24 @@ export interface ApprovedFeedback {
   approved: string;
 }
 
+// Type for testimonial conversion result
+export interface TestimonialResult {
+  id: string;
+  name: string;
+  position: string;
+  company: string;
+  image: string;
+  rating: number;
+  feedback: string;
+  project: string;
+  location: string;
+}
+
+// Type for test connection response data
+export interface SheetTestData {
+  values?: string[][];
+}
+
 // Google Sheets configuration for feedbacks
 const FEEDBACKS_SHEET_ID = '1UzIwQBH6WgIJlKKzbRM59pnUwcbUg3s12WB79wsymF0';
 const FEEDBACKS_SHEET_NAME = 'Sheet1'; // Default sheet name, adjust if needed
@@ -96,7 +114,7 @@ export const fetchApprovedFeedbacks = async (): Promise<ApprovedFeedback[]> => {
 };
 
 // Test connection to Google Sheets feedbacks
-export const testFeedbacksSheetConnection = async (): Promise<{ success: boolean; message: string; data?: any }> => {
+export const testFeedbacksSheetConnection = async (): Promise<{ success: boolean; message: string; data?: SheetTestData }> => {
   try {
     const response = await fetch(getFeedbacksSheetUrl());
 
@@ -123,7 +141,7 @@ export const testFeedbacksSheetConnection = async (): Promise<{ success: boolean
 };
 
 // Convert ApprovedFeedback to Testimonial format
-export const convertFeedbackToTestimonial = (feedback: ApprovedFeedback): any => {
+export const convertFeedbackToTestimonial = (feedback: ApprovedFeedback): TestimonialResult => {
   // Generate a placeholder image based on name
   const generateImage = (name: string) => {
     const hash = name.split('').reduce((a, b) => {

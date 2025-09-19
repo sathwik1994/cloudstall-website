@@ -67,7 +67,7 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
   });
 
   // Sample job data
-  const jobs: Job[] = [
+  const jobs: Job[] = useMemo(() => [
     {
       id: '1',
       title: 'Senior Full Stack Developer',
@@ -266,7 +266,7 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
       postedDate: '2024-01-03',
       featured: false
     }
-  ];
+  ], []);
 
   const departments = Array.from(new Set(jobs.map(job => job.department)));
   const locations = Array.from(new Set(jobs.map(job => job.location)));
