@@ -99,7 +99,8 @@ const Testimonials: React.FC = () => {
     position: '',
     rating: 5,
     feedback: '',
-    project: ''
+    project: '',
+    submitterType: 'Client'
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [alertModal, setAlertModal] = useState({
@@ -250,7 +251,8 @@ const Testimonials: React.FC = () => {
         position: feedbackForm.position,
         project: feedbackForm.project,
         rating: feedbackForm.rating,
-        feedback: feedbackForm.feedback
+        feedback: feedbackForm.feedback,
+        submitterType: feedbackForm.submitterType
       };
 
       console.log('Submitting feedback data:', feedbackData);
@@ -267,7 +269,8 @@ const Testimonials: React.FC = () => {
           position: '',
           rating: 5,
           feedback: '',
-          project: ''
+          project: '',
+          submitterType: 'Client'
         });
         setShowFeedbackModal(false);
 
@@ -595,6 +598,23 @@ const Testimonials: React.FC = () => {
                         placeholder="Your job title"
                       />
                     </div>
+                  </div>
+
+                  {/* Submitter Type */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      You are a *
+                    </label>
+                    <select
+                      name="submitterType"
+                      value={feedbackForm.submitterType}
+                      onChange={handleFeedbackInputChange}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200"
+                    >
+                      <option value="Client">Client</option>
+                      <option value="Employee">Employee</option>
+                      <option value="Others">Others</option>
+                    </select>
                   </div>
 
                   {/* Project Type */}

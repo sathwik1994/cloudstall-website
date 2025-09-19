@@ -236,6 +236,7 @@ const CONTACT_FORM_SHEET_ID = '1ZoKwQhg0l03hpQgNvNxvQ8sFLF3ndq1r12Swy3207xU';
           'Project Type',
           'Rating',
           'Feedback',
+          'Submitter Type',
           'Source'
         ]);
       }
@@ -250,6 +251,7 @@ const CONTACT_FORM_SHEET_ID = '1ZoKwQhg0l03hpQgNvNxvQ8sFLF3ndq1r12Swy3207xU';
         data.project || '',
         data.rating || 5,
         data.feedback || '',
+        data.submitterType || 'Client',
         'Website Feedback Form'
       ];
 
@@ -327,7 +329,8 @@ const CONTACT_FORM_SHEET_ID = '1ZoKwQhg0l03hpQgNvNxvQ8sFLF3ndq1r12Swy3207xU';
       position: 'Test Manager',
       project: 'Web Applications',
       rating: 5,
-      feedback: 'Manual test feedback from Google Apps Script editor. Great service and professional team!'
+      feedback: 'Manual test feedback from Google Apps Script editor. Great service and professional team!',
+      submitterType: 'Client'
     };
 
     try {

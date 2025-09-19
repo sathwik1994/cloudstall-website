@@ -41,6 +41,7 @@ export interface FeedbackData {
   project: string;
   rating: number;
   feedback: string;
+  submitterType: string;
 }
 
 export type FormSubmissionData = ContactFormData | ProjectInquiryData | FeedbackData;
