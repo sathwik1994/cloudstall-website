@@ -236,8 +236,9 @@ const CONTACT_FORM_SHEET_ID = '1ZoKwQhg0l03hpQgNvNxvQ8sFLF3ndq1r12Swy3207xU';
           'Project Type',
           'Rating',
           'Feedback',
+          'Source',
           'Submitter Type',
-          'Source'
+          'Approved'
         ]);
       }
 
@@ -251,8 +252,9 @@ const CONTACT_FORM_SHEET_ID = '1ZoKwQhg0l03hpQgNvNxvQ8sFLF3ndq1r12Swy3207xU';
         data.project || '',
         data.rating || 5,
         data.feedback || '',
+        'Website Feedback Form',
         data.submitterType || 'Client',
-        'Website Feedback Form'
+        'N' // Default to 'N' for Approved, admin can change to 'Y'
       ];
 
       sheet.appendRow(newRow);
@@ -330,7 +332,7 @@ const CONTACT_FORM_SHEET_ID = '1ZoKwQhg0l03hpQgNvNxvQ8sFLF3ndq1r12Swy3207xU';
       project: 'Web Applications',
       rating: 5,
       feedback: 'Manual test feedback from Google Apps Script editor. Great service and professional team!',
-      submitterType: 'Client'
+      submitterType: 'Employee'
     };
 
     try {
