@@ -394,7 +394,7 @@ const Testimonials: React.FC = () => {
                   {/* Client Info */}
                   <div className="text-center">
                     {/* Client Details */}
-                    <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center justify-center gap-3 mb-2">
                       <h4 className="font-poppins font-semibold text-gray-900 text-base">
                         {testimonial.name}
                       </h4>
