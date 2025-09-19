@@ -15,6 +15,7 @@ interface Testimonial {
   feedback: string;
   project: string;
   location: string;
+  submitterType?: string;
 }
 
 // Sample testimonials data (moved outside component to prevent dependency issues)
@@ -408,9 +409,16 @@ const Testimonials: React.FC = () => {
                     </div>
 
                     {/* Client Details */}
-                    <h4 className="font-poppins font-semibold text-gray-900 text-base mb-1">
-                      {testimonial.name}
-                    </h4>
+                    <div className="flex items-center justify-between mb-1">
+                      <h4 className="font-poppins font-semibold text-gray-900 text-base">
+                        {testimonial.name}
+                      </h4>
+                      {testimonial.submitterType && (
+                        <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs font-medium">
+                          {testimonial.submitterType}
+                        </span>
+                      )}
+                    </div>
                     <p className="text-primary font-medium text-sm">
                       {testimonial.position}
                     </p>

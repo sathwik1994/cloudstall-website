@@ -26,6 +26,7 @@ export interface TestimonialResult {
   feedback: string;
   project: string;
   location: string;
+  submitterType?: string;
 }
 
 // Type for test connection response data
@@ -159,13 +160,14 @@ export const convertFeedbackToTestimonial = (feedback: ApprovedFeedback): Testim
   return {
     id: feedback.id,
     name: feedback.name,
-    position: feedback.position || 'Client',
+    position: feedback.position || 'Other',
     company: feedback.company || 'Valued Client',
     image: generateImage(feedback.name),
     rating: feedback.rating,
     feedback: feedback.feedback,
     project: feedback.project || 'Service',
-    location: 'Client Location' // Default location since not captured in feedback
+    location: 'Client Location', // Default location since not captured in feedback
+    submitterType: feedback.submitterType
   };
 };
 

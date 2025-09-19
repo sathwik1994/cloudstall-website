@@ -4,7 +4,7 @@
  */
 
 // Replace this with your Google Apps Script web app URL after deployment
-const GOOGLE_APPS_SCRIPT_URL = import.meta.env.REACT_APP_GOOGLE_SHEETS_URL || 'https://script.google.com/macros/s/AKfycbwsu6RX8sYTvNcBNz87uJvba6jQYaYHnlyIkwEJWgbRQfxRnfKNY93BRelm2q-Jf0ri/exec';
+const GOOGLE_APPS_SCRIPT_URL = import.meta.env.REACT_APP_GOOGLE_SHEETS_URL || 'https://script.google.com/macros/s/AKfycbztLmd-I-mFJeKRiU5thh6-Uuzpn5j2rrLDyk_wzAF8geD5nZlsJ0IfcRcpo_HVN9tv/exec';
 
 export interface ContactFormData {
   formType: 'contact';
