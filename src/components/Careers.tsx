@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, 
@@ -31,6 +31,7 @@ interface Job {
     currency: string;
   };
   description: string;
+  education: string;
   requirements: string[];
   responsibilities: string[];
   benefits: string[];
@@ -66,6 +67,11 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
     level: ''
   });
 
+  // Scroll to top when a job is selected or deselected
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [selectedJob]);
+
   // Sample job data
   const jobs: Job[] = useMemo(() => [
     {
@@ -77,6 +83,7 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
       level: 'Senior',
       salary: { min: 120000, max: 180000, currency: 'USD' },
       description: 'Join our engineering team to build cutting-edge web applications using modern technologies. You\'ll work on both frontend and backend systems that serve millions of users.',
+      education: 'Master\'s degree or foreign equivalent in Computer Science, Information Systems, Engineering or a related field',
       requirements: [
         '5+ years of experience in full stack development',
         'Proficiency in React, Node.js, TypeScript',
@@ -99,7 +106,7 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
         'Unlimited PTO'
       ],
       postedDate: '2024-01-15',
-      featured: true
+      featured: false
     },
     {
       id: '2',
@@ -110,6 +117,7 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
       level: 'Mid',
       salary: { min: 90000, max: 130000, currency: 'USD' },
       description: 'Help clients optimize their business processes through SAP implementations. Work with Fortune 500 companies to transform their operations.',
+      education: 'Bachelor\'s degree or foreign equivalent in Computer Science, Information Systems, Engineering or a related field',
       requirements: [
         '3+ years of SAP implementation experience',
         'SAP S/4HANA certification preferred',
@@ -132,7 +140,7 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
         'Performance bonuses'
       ],
       postedDate: '2024-01-10',
-      featured: true
+      featured: false
     },
     {
       id: '3',
@@ -143,8 +151,8 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
       level: 'Senior',
       salary: { min: 140000, max: 200000, currency: 'USD' },
       description: 'Build and deploy machine learning models at scale. Work on cutting-edge AI solutions for enterprise clients.',
+      education: 'Master\'s degree or foreign equivalent in Computer Science, Information Systems, Engineering or a related field (PhD preferred)',
       requirements: [
-        'PhD or Masters in Computer Science, AI, or related field',
         'Experience with TensorFlow, PyTorch, or similar',
         'Strong Python programming skills',
         'Experience with MLOps and model deployment',
@@ -165,7 +173,7 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
         'Flexible schedule'
       ],
       postedDate: '2024-01-12',
-      featured: true
+      featured: false
     },
     {
       id: '4',
@@ -176,6 +184,7 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
       level: 'Mid',
       salary: { min: 75000, max: 110000, currency: 'USD' },
       description: 'Create beautiful and intuitive user experiences for our web and mobile applications. Work closely with development teams to bring designs to life.',
+      education: 'Bachelor\'s degree or foreign equivalent in Computer Science, Information Systems, Engineering or a related field',
       requirements: [
         '3+ years of UI/UX design experience',
         'Proficiency in Figma, Sketch, Adobe Creative Suite',
@@ -209,6 +218,7 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
       level: 'Mid',
       salary: { min: 100000, max: 150000, currency: 'USD' },
       description: 'Build and maintain CI/CD pipelines, manage cloud infrastructure, and ensure high availability of our systems.',
+      education: 'Bachelor\'s degree or foreign equivalent in Computer Science, Information Systems, Engineering or a related field',
       requirements: [
         '4+ years of DevOps experience',
         'Experience with Docker, Kubernetes',
@@ -242,6 +252,7 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
       level: 'Senior',
       salary: { min: 130000, max: 170000, currency: 'USD' },
       description: 'Lead product strategy and roadmap for our enterprise software solutions. Work cross-functionally to deliver exceptional products.',
+      education: 'Master\'s degree or foreign equivalent in Computer Science, Information Systems, Engineering or a related field',
       requirements: [
         '5+ years of product management experience',
         'Experience with B2B software products',
@@ -265,6 +276,135 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
       ],
       postedDate: '2024-01-03',
       featured: false
+    },
+    {
+      id: '7',
+      title: 'Systems Analyst',
+      department: 'Product',
+      location: 'Chicago, IL',
+      type: 'Full-time',
+      level: 'Entry',
+      salary: { min: 85000, max: 100000, currency: 'USD' },
+      description: 'The Systems Analyst will analyze business requirements and design, develop, and support enterprise system solutions, including ERP platforms such as Workday. The role involves collaborating with business stakeholders, implementing system enhancements, and supporting integrations to ensure reliable and efficient operations.',
+      education: 'Bachelor\'s degree or foreign equivalent in Business Analytics, Computer Science, Information Systems or a related field',
+      requirements: [
+        '4+ years of systems analysis experience',
+        'Experience with ERP platforms (Workday preferred)',
+        'Strong analytical and communication skills',
+        'Understanding of agile methodologies',
+        'Systems integrations, SDLC processes and data analysis',
+      ],
+      responsibilities: [
+        'Support end-to-end implementation of Workday ERP applications',
+        'Assist in analyzing user requirements and translating business needs into technical system specifications',
+        'Participate in designing, developing, and implementing systems and integrations within the Workday platform',
+        'Help develop and maintain system integrations to ensure seamless data flow and process efficiency',
+        'Troubleshoot and resolve system and integration issues to ensure uptime and reliability',
+        'Conduct unit, integration, and performance testing of system components',
+        'Collaborate with business stakeholders and cross-functional teams to align system solutions with business objectives',
+        'Create and maintain system documentation, configurations, and technical specifications',
+        'Participate in system upgrades and enhancements to improve scalability and performance',
+        'Provide training and ongoing support to end users',
+        'Stay current with industry best practices in Workday and enterprise system integration'
+      ],
+      benefits: [
+        'Competitive salary and bonuses',
+        'Equity participation',
+        'Product management training',
+        'Flexible work arrangements',
+        'Health and wellness programs'
+      ],
+      postedDate: '2024-02-01',
+      featured: false
+    },
+    {
+      id: '8',
+      title: 'Systems Analyst',
+      department: 'Product',
+      location: 'Remote',
+      type: 'Full-time',
+      level: 'Mid',
+      salary: { min: 90000, max: 115000, currency: 'USD' },
+      description: 'The Systems Analyst will lead analysis, design, and implementation of complex enterprise system solutions, including ERP applications such as Workday. This role requires deep experience in system integrations, stakeholder collaboration, and end-to-end solution delivery.',
+      education: 'Bachelor\'s degree or foreign equivalent in Business Analytics, Computer Science, Information Systems or a related field',
+      requirements: [
+        'At least 6 years of experience in systems analysis and enterprise application development',
+        'Experience with ERP platforms such as Workday or similar enterprise systems',
+        'Designing and supporting system integrations and data workflows',
+        'Workday HCM/Financials or equivalent ERP systems',
+        'Integration frameworks, APIs, ETL tools',
+        'SDLC methodologies and system testing',
+        'SQL and enterprise data analysis',
+        'Excellent stakeholder communication skills'
+      ],
+      responsibilities: [
+        'Lead end-to-end implementation of Workday ERP applications',
+        'Independently analyze user requirements and translate business needs into technical system specifications',
+        'Design, develop, and implement complex systems and integrations within the Workday platform',
+        'Own and maintain system integrations to ensure seamless data flow and process efficiency',
+        'Proactively troubleshoot and resolve system and integration issues to ensure uptime and reliability',
+        'Conduct and oversee unit, integration, and performance testing of system components',
+        'Partner with business stakeholders and cross-functional teams to align system solutions with business objectives',
+        'Develop and maintain comprehensive system documentation, configurations, and technical specifications',
+        'Lead system upgrades and enhancements to improve scalability and performance',
+        'Deliver training and ongoing support to end users',
+        'Stay current with industry best practices in Workday and enterprise system integration'
+      ],
+      benefits: [
+        'Competitive salary and bonuses',
+        'Equity participation',
+        'Professional development opportunities',
+        'Flexible work arrangements',
+        'Comprehensive health insurance',
+        '401(k) matching'
+      ],
+      postedDate: '2024-09-04',
+      featured: false
+    },
+    {
+      id: '9',
+      title: 'Senior Systems Analyst',
+      department: 'Product',
+      location: 'Remote',
+      type: 'Full-time',
+      level: 'Senior',
+      salary: { min: 110000, max: 130000, currency: 'USD' },
+      description: 'The Senior Systems Analyst will provide technical leadership in the design, implementation, and optimization of enterprise systems, including Workday ERP. This role involves leading complex initiatives, mentoring team members, and driving scalable system solutions aligned with business strategy.',
+      education: 'Bachelor\'s degree or foreign equivalent in Business Analytics, Computer Science, Information Systems or a related field',
+      requirements: [
+        'At least 8 years of experience in systems analysis and enterprise application architecture',
+        'Experience with ERP platforms such as Workday or comparable enterprise systems',
+        'Leading system integrations, implementations, and enhancements',
+        'Advanced Workday ERP knowledge or equivalent',
+        'Enterprise system integration architecture',
+        'APIs, ETL processes, and data modeling',
+        'SDLC leadership and solution governance',
+        'Strong leadership and communication skills'
+      ],
+      responsibilities: [
+        'Drive and oversee enterprise-wide end-to-end implementation of Workday ERP applications',
+        'Lead strategic analysis of user requirements and architect technical system specifications aligned with business objectives',
+        'Architect, design, and implement highly complex systems and integrations within the Workday platform',
+        'Strategically develop and optimize system integrations to ensure seamless data flow and process efficiency',
+        'Serve as escalation point to resolve critical system and integration issues ensuring uptime and reliability',
+        'Define testing strategies and oversee unit, integration, and performance testing of system components',
+        'Drive collaboration with senior business stakeholders and cross-functional teams to align enterprise system solutions with strategic business objectives',
+        'Establish standards for system documentation, configurations, and technical specifications',
+        'Lead strategic system upgrades and enhancements to drive scalability and performance optimization',
+        'Mentor team members while delivering advanced training and support to end users',
+        'Champion and evangelize industry best practices in Workday and enterprise system integration'
+      ],
+      benefits: [
+        'Competitive salary and bonuses',
+        'Equity participation',
+        'Leadership development programs',
+        'Flexible work arrangements',
+        'Comprehensive health insurance',
+        '401(k) matching',
+        'Professional certifications support'
+      ],
+      postedDate: '2025-04-02',
+      featured: false
     }
   ], []);
 
@@ -278,13 +418,16 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
       const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            job.department.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            job.description.toLowerCase().includes(searchTerm.toLowerCase());
-      
+
       const matchesDepartment = !filters.department || job.department === filters.department;
       const matchesLocation = !filters.location || job.location === filters.location;
       const matchesType = !filters.type || job.type === filters.type;
       const matchesLevel = !filters.level || job.level === filters.level;
 
       return matchesSearch && matchesDepartment && matchesLocation && matchesType && matchesLevel;
+    }).sort((a, b) => {
+      // Sort by date, newest first
+      return new Date(b.postedDate).getTime() - new Date(a.postedDate).getTime();
     });
   }, [searchTerm, filters, jobs]);
 
@@ -323,7 +466,9 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
   };
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
+    // Parse date components to avoid timezone issues
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
     return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
@@ -417,6 +562,14 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
                   <div>
                     <h2 className="text-2xl font-poppins font-semibold mb-4">Job Description</h2>
                     <p className="text-gray-600 leading-relaxed">{selectedJob.description}</p>
+                  </div>
+
+                  {/* Education */}
+                  <div>
+                    <h2 className="text-2xl font-poppins font-semibold mb-4">Educational Requirements</h2>
+                    <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                      <p className="text-gray-700">{selectedJob.education}</p>
+                    </div>
                   </div>
 
                   {/* Responsibilities */}

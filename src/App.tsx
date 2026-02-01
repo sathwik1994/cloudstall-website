@@ -20,22 +20,31 @@ function App() {
   const [selectedTechnology, setSelectedTechnology] = useState<string>('');
 
   useEffect(() => {
+    // Prevent browser scroll restoration
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
     AOS.init({
       duration: 800,
       offset: 100,
       easing: 'ease-in-out',
       once: true
     });
+
+    // Scroll to top on initial page load/refresh
+    window.scrollTo(0, 0);
   }, []);
+
+  // Scroll to top whenever view changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [currentView]);
 
   const handleServiceClick = (serviceName: string) => {
     setSelectedService(serviceName);
     setSelectedTechnology('');
     setCurrentView('project-inquiry');
-    // Use setTimeout to ensure the component has rendered before scrolling
-    setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    }, 100);
   };
 
   // const handleTechnologyClick = (technologyName: string) => {
@@ -52,17 +61,10 @@ function App() {
     setSelectedService('');
     setSelectedTechnology('');
     setCurrentView('contact-form');
-    // Use setTimeout to ensure the component has rendered before scrolling
-    setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    }, 100);
   };
 
   const handleCareersClick = () => {
     setCurrentView('careers');
-    setTimeout(() => {
-      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    }, 100);
   };
 
   const handleBackToHome = () => {

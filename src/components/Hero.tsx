@@ -75,10 +75,11 @@ const Hero: React.FC<HeroProps> = ({ onGetStartedClick }) => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-poppins font-bold text-gray-900 mb-6 leading-tight"
+            className="text-5xl md:text-6xl lg:text-7xl font-poppins font-bold text-gray-900 mb-6"
           >
-            Technology Solutions for
-            <span className="block text-gradient">Modern Business</span>
+            <span className="block mb-2">Technology Solutions</span>
+            <span className="block">for</span>
+            <span className="block text-gradient -mt-2">Modern Business</span>
           </motion.h1>
 
           {/* Subtitle */}
