@@ -314,7 +314,7 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
         'Flexible work arrangements',
         'Health and wellness programs'
       ],
-      postedDate: '2024-02-01',
+      postedDate: '2024-02-02',
       featured: false
     },
     {
@@ -358,7 +358,7 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
         'Comprehensive health insurance',
         '401(k) matching'
       ],
-      postedDate: '2024-09-04',
+      postedDate: '2025-07-01',
       featured: false
     },
     {
@@ -405,6 +405,22 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
       ],
       postedDate: '2025-04-02',
       featured: false
+    },
+    {
+      id: '10',
+      title: 'Software Engineers',
+      department: 'Engineering',
+      location: 'Remote',
+      type: 'Full-time',
+      level: 'Mid',
+      salary: { min: 100000, max: 150000, currency: 'USD' },
+      description: 'Develop and maintain high volume streaming ingestion pipelines using Python, Flink, AWS EKS, Kafka, Apache Iceberg and AVRO. Implement data migration from On-prem (Hadoop) to AWS S3 using HDFS commands. Implement and manage end-end CI/CD pipeline using Rio to integrate data across multiple domains. Migrate and transform large scale datasets across multiple cloud platforms (AWS, GCP, Azure) using Scalable ETL Frameworks. Automate data ingestion workflows, reducing efforts and improving pipeline efficiency. Deploy and manage Kubernetes clusters to enable scalable data pipelines. Master\'s degree in Science, Technology, or Engineering (any) is required. Work location: Warrenville, IL and various unanticipated locations throughout the U.S. Email Resume to HR Dept., Cloudstall, LLC., at hr@cloudstall.net. Should the candidate accept employment with Cloudstall, LLC., the referring employee will be eligible to receive an award of $1,000.00 for the successful referral.',
+      education: '',
+      requirements: [],
+      responsibilities: [],
+      benefits: [],
+      postedDate: '2026-02-02',
+      featured: true
     }
   ], []);
 
@@ -502,52 +518,66 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                 <div className="mb-4 lg:mb-0">
                   <h1 className="text-3xl font-poppins font-bold mb-2">{selectedJob.title}</h1>
-                  <div className="flex flex-wrap items-center gap-4 text-white/90">
-                    <div className="flex items-center space-x-2">
-                      <Briefcase className="w-5 h-5" />
-                      <span>{selectedJob.department}</span>
+                  {selectedJob.id === '10' && (
+                    <div className="flex items-center space-x-2 text-white/90">
+                      <Calendar className="w-5 h-5" />
+                      <span>Posted {formatDate(selectedJob.postedDate)}</span>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <MapPin className="w-5 h-5" />
-                      <span>{selectedJob.location}</span>
+                  )}
+                  {selectedJob.id !== '10' && (
+                    <div className="flex flex-wrap items-center gap-4 text-white/90">
+                      <div className="flex items-center space-x-2">
+                        <Briefcase className="w-5 h-5" />
+                        <span>{selectedJob.department}</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <MapPin className="w-5 h-5" />
+                        <span>{selectedJob.location}</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Clock className="w-5 h-5" />
+                        <span>{selectedJob.type}</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Users className="w-5 h-5" />
+                        <span>{selectedJob.level} Level</span>
+                      </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <Clock className="w-5 h-5" />
-                      <span>{selectedJob.type}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Users className="w-5 h-5" />
-                      <span>{selectedJob.level} Level</span>
-                    </div>
-                  </div>
+                  )}
                 </div>
                 <div className="flex flex-col items-start lg:items-end space-y-3">
-                  <div className="text-right">
-                    <div className="text-2xl font-bold">{formatSalary(selectedJob.salary)}</div>
-                    <div className="text-white/80">per year</div>
-                  </div>
+                  {selectedJob.id !== '10' && (
+                    <div className="text-right">
+                      <div className="text-2xl font-bold">{formatSalary(selectedJob.salary)}</div>
+                      <div className="text-white/80">per year</div>
+                    </div>
+                  )}
                   <div className="flex space-x-3">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => toggleSaveJob(selectedJob.id)}
-                      className={`p-3 rounded-full transition-all duration-300 ${
-                        savedJobs.includes(selectedJob.id)
-                          ? 'bg-red-500 text-white'
-                          : 'bg-white/20 text-white hover:bg-white/30'
-                      }`}
-                    >
-                      <Heart className={`w-5 h-5 ${savedJobs.includes(selectedJob.id) ? 'fill-current' : ''}`} />
-                    </motion.button>
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => showAlert('🚀 Apply Now', 'Please send your resume and cover letter to careers@cloudstall.net with the job title in the subject line. We\'ll review your application and get back to you within 5 business days.', 'success')}
-                      className="px-8 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2"
-                    >
-                      <span>Apply Now</span>
-                      <ExternalLink className="w-4 h-4" />
-                    </motion.button>
+                    {selectedJob.id !== '10' && (
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => toggleSaveJob(selectedJob.id)}
+                        className={`p-3 rounded-full transition-all duration-300 ${
+                          savedJobs.includes(selectedJob.id)
+                            ? 'bg-red-500 text-white'
+                            : 'bg-white/20 text-white hover:bg-white/30'
+                        }`}
+                      >
+                        <Heart className={`w-5 h-5 ${savedJobs.includes(selectedJob.id) ? 'fill-current' : ''}`} />
+                      </motion.button>
+                    )}
+                    {selectedJob.id !== '10' && (
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => showAlert('🚀 Apply Now', 'Please send your resume and cover letter to hr@cloudstall.net with the job title in the subject line. We\'ll review your application and get back to you within 5 business days.', 'success')}
+                        className="px-8 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-gray-100 transition-all duration-300 flex items-center space-x-2"
+                      >
+                        <span>Apply Now</span>
+                        <ExternalLink className="w-4 h-4" />
+                      </motion.button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -561,90 +591,110 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
                   {/* Description */}
                   <div>
                     <h2 className="text-2xl font-poppins font-semibold mb-4">Job Description</h2>
-                    <p className="text-gray-600 leading-relaxed">{selectedJob.description}</p>
+                    {selectedJob.id === '10' ? (
+                      <div className="text-gray-600 leading-relaxed space-y-4">
+                        <p>Develop and maintain high volume streaming ingestion pipelines using Python, Flink, AWS EKS, Kafka, Apache Iceberg and AVRO. Implement data migration from On-prem (Hadoop) to AWS S3 using HDFS commands. Implement and manage end-end CI/CD pipeline using Rio to integrate data across multiple domains. Migrate and transform large scale datasets across multiple cloud platforms (AWS, GCP, Azure) using Scalable ETL Frameworks. Automate data ingestion workflows, reducing efforts and improving pipeline efficiency. Deploy and manage Kubernetes clusters to enable scalable data pipelines. Master's degree in Science, Technology, or Engineering (any) is required. Work location: Warrenville, IL and various unanticipated locations throughout the U.S.</p>
+                        <p>Email Resume to HR Dept., Cloudstall, LLC., at hr@cloudstall.net</p>
+                        <p className="font-bold">Should the candidate accept employment with Cloudstall, LLC., the referring employee will be eligible to receive an award of $1,000.00 for the successful referral.</p>
+                      </div>
+                    ) : (
+                      <p className="text-gray-600 leading-relaxed">{selectedJob.description}</p>
+                    )}
                   </div>
 
                   {/* Education */}
-                  <div>
-                    <h2 className="text-2xl font-poppins font-semibold mb-4">Educational Requirements</h2>
-                    <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
-                      <p className="text-gray-700">{selectedJob.education}</p>
+                  {selectedJob.education && (
+                    <div>
+                      <h2 className="text-2xl font-poppins font-semibold mb-4">Educational Requirements</h2>
+                      <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                        <p className="text-gray-700">{selectedJob.education}</p>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Responsibilities */}
-                  <div>
-                    <h2 className="text-2xl font-poppins font-semibold mb-4">Responsibilities</h2>
-                    <ul className="space-y-2">
-                      {selectedJob.responsibilities.map((responsibility, index) => (
-                        <li key={index} className="flex items-start space-x-3">
-                          <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                          <span className="text-gray-600">{responsibility}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {selectedJob.responsibilities.length > 0 && (
+                    <div>
+                      <h2 className="text-2xl font-poppins font-semibold mb-4">Responsibilities</h2>
+                      <ul className="space-y-2">
+                        {selectedJob.responsibilities.map((responsibility, index) => (
+                          <li key={index} className="flex items-start space-x-3">
+                            <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                            <span className="text-gray-600">{responsibility}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                   {/* Requirements */}
-                  <div>
-                    <h2 className="text-2xl font-poppins font-semibold mb-4">Requirements</h2>
-                    <ul className="space-y-2">
-                      {selectedJob.requirements.map((requirement, index) => (
-                        <li key={index} className="flex items-start space-x-3">
-                          <div className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
-                          <span className="text-gray-600">{requirement}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {selectedJob.requirements.length > 0 && (
+                    <div>
+                      <h2 className="text-2xl font-poppins font-semibold mb-4">Requirements</h2>
+                      <ul className="space-y-2">
+                        {selectedJob.requirements.map((requirement, index) => (
+                          <li key={index} className="flex items-start space-x-3">
+                            <div className="w-2 h-2 bg-secondary rounded-full mt-2 flex-shrink-0"></div>
+                            <span className="text-gray-600">{requirement}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
 
                 {/* Sidebar */}
                 <div className="space-y-6">
                   {/* Benefits */}
-                  <div className="bg-gray-50 rounded-xl p-6">
-                    <h3 className="text-xl font-poppins font-semibold mb-4">Benefits & Perks</h3>
-                    <ul className="space-y-3">
-                      {selectedJob.benefits.map((benefit, index) => (
-                        <li key={index} className="flex items-center space-x-3">
-                          <Star className="w-4 h-4 text-yellow-500 flex-shrink-0" />
-                          <span className="text-gray-600 text-sm">{benefit}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {selectedJob.benefits.length > 0 && (
+                    <div className="bg-gray-50 rounded-xl p-6">
+                      <h3 className="text-xl font-poppins font-semibold mb-4">Benefits & Perks</h3>
+                      <ul className="space-y-3">
+                        {selectedJob.benefits.map((benefit, index) => (
+                          <li key={index} className="flex items-center space-x-3">
+                            <Star className="w-4 h-4 text-yellow-500 flex-shrink-0" />
+                            <span className="text-gray-600 text-sm">{benefit}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                   {/* Job Info */}
-                  <div className="bg-primary/5 rounded-xl p-6">
-                    <h3 className="text-xl font-poppins font-semibold mb-4">Job Information</h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center space-x-3">
-                        <Calendar className="w-4 h-4 text-primary" />
-                        <div>
-                          <div className="text-sm text-gray-500">Posted</div>
-                          <div className="font-semibold">{formatDate(selectedJob.postedDate)}</div>
+                  {selectedJob.id !== '10' && (
+                    <div className="bg-primary/5 rounded-xl p-6">
+                      <h3 className="text-xl font-poppins font-semibold mb-4">Job Information</h3>
+                      <div className="space-y-3">
+                        <div className="flex items-center space-x-3">
+                          <Calendar className="w-4 h-4 text-primary" />
+                          <div>
+                            <div className="text-sm text-gray-500">Posted</div>
+                            <div className="font-semibold">{formatDate(selectedJob.postedDate)}</div>
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <DollarSign className="w-4 h-4 text-primary" />
-                        <div>
-                          <div className="text-sm text-gray-500">Salary Range</div>
-                          <div className="font-semibold">{formatSalary(selectedJob.salary)}</div>
+                        <div className="flex items-center space-x-3">
+                          <DollarSign className="w-4 h-4 text-primary" />
+                          <div>
+                            <div className="text-sm text-gray-500">Salary Range</div>
+                            <div className="font-semibold">{formatSalary(selectedJob.salary)}</div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Apply Button */}
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => showAlert('🚀 Apply Now', 'Please send your resume and cover letter to careers@cloudstall.net with the job title in the subject line. We\'ll review your application and get back to you within 5 business days.', 'success')}
-                    className="w-full btn-primary text-center flex items-center justify-center space-x-2"
-                  >
-                    <span>Apply for this Position</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </motion.button>
+                  {selectedJob.id !== '10' && (
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => showAlert('🚀 Apply Now', 'Please send your resume and cover letter to hr@cloudstall.net with the job title in the subject line. We\'ll review your application and get back to you within 5 business days.', 'success')}
+                      className="w-full btn-primary text-center flex items-center justify-center space-x-2"
+                    >
+                      <span>Apply for this Position</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </motion.button>
+                  )}
                 </div>
               </div>
             </div>
@@ -896,36 +946,40 @@ const Careers: React.FC<CareersProps> = ({ onBack }) => {
                       </motion.button>
                     </div>
                     
-                    <div className="flex flex-wrap items-center gap-4 text-gray-600 mb-3">
-                      <div className="flex items-center space-x-2">
-                        <Briefcase className="w-4 h-4" />
-                        <span className="text-sm">{job.department}</span>
+                    {job.id !== '10' && (
+                      <div className="flex flex-wrap items-center gap-4 text-gray-600 mb-3">
+                        <div className="flex items-center space-x-2">
+                          <Briefcase className="w-4 h-4" />
+                          <span className="text-sm">{job.department}</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <MapPin className="w-4 h-4" />
+                          <span className="text-sm">{job.location}</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Clock className="w-4 h-4" />
+                          <span className="text-sm">{job.type}</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Users className="w-4 h-4" />
+                          <span className="text-sm">{job.level} Level</span>
+                        </div>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <MapPin className="w-4 h-4" />
-                        <span className="text-sm">{job.location}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Clock className="w-4 h-4" />
-                        <span className="text-sm">{job.type}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Users className="w-4 h-4" />
-                        <span className="text-sm">{job.level} Level</span>
-                      </div>
-                    </div>
+                    )}
 
                     <p className="text-gray-600 text-sm line-clamp-2 mb-4">
                       {job.description}
                     </p>
 
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <DollarSign className="w-4 h-4 text-green-500" />
-                        <span className="font-semibold text-green-600">
-                          {formatSalary(job.salary)}
-                        </span>
-                      </div>
+                      {job.id !== '10' && (
+                        <div className="flex items-center space-x-2">
+                          <DollarSign className="w-4 h-4 text-green-500" />
+                          <span className="font-semibold text-green-600">
+                            {formatSalary(job.salary)}
+                          </span>
+                        </div>
+                      )}
                       <div className="flex items-center space-x-2 text-sm text-gray-500">
                         <Calendar className="w-4 h-4" />
                         <span>Posted {formatDate(job.postedDate)}</span>

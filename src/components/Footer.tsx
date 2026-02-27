@@ -190,7 +190,7 @@ const Footer: React.FC<FooterProps> = ({ onCareersClick }) => {
           if (onCareersClick) {
             onCareersClick();
           } else {
-            showAlert('🚀 Careers', 'Join our growing team! We\'re always looking for talented developers and consultants. Send your resume to careers@cloudstall.net', 'success');
+            showAlert('🚀 Careers', 'Join our growing team! We\'re always looking for talented developers and consultants. Send your resume to hr@cloudstall.net', 'success');
           }
         } else if (item === 'Case Studies') {
           showAlert('📊 Case Studies', 'Explore our 500+ successful projects. Detailed case studies are being prepared!', 'info');
